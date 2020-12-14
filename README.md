@@ -51,4 +51,4 @@ Example with custom file path:
 python lido_validate_keys.py --rpc_url https://eth-goerli.alchemyapi.io/v2/XXX --network pyrmont --lido_address 0x123 --nos_registry_address 0x123 validate_file_keys --file input.json
 ```
 
-You can also get all commands and options via `python cli.py --help`
+You can also get all commands and options via `python lido_validate_keys.py --help`
