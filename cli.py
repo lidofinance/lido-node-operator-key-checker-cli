@@ -42,8 +42,12 @@ def cli(ctx, rpc_url, network, contract_address, operator_address, contract_abi,
     """CLI utility to load Node Operators keys from file or network and check for duplicates and invalid signatures."""
 
     # Connect to network
+
     w3 = Web3(Web3.HTTPProvider(rpc_url))
-    w3.middleware_onion.inject(geth_poa_middleware, layer=0)
+
+    if network.lower() == "pyrmont":
+        w3.middleware_onion.inject(geth_poa_middleware, layer=0)
+
     click.secho("Connected to the network", fg="green")
 
     # Load contracts from network
