@@ -21,25 +21,25 @@ from py_ecc.bls import G2ProofOfPossession as bls
 )
 @click.option("--network", help="Network to use, Mainnet / Pyrmont")
 @click.option(
-    "--contract_address",
-    help="Address of the main contract",
+    "--lido_address",
+    help="Address of the main contract.",
 )
 @click.option(
-    "--operator_address",
-    help="Address of the operator contract",
+    "--nos_registry_address",
+    help="Address of the operator contract.",
 )
 @click.option(
-    "--contract_abi",
+    "--lido_abi",
     default="abi/Lido.json",
-    help="ABI file path for contract",
+    help="ABI file path for contract.",
 )
 @click.option(
-    "--operator_abi",
+    "--nos_registry_abi",
     default="abi/NodeOperatorsRegistry.json",
-    help="ABI file path for operators contract",
+    help="ABI file path for operators contract.",
 )
 @click.pass_context
-def cli(ctx, rpc_url, network, contract_address, operator_address, contract_abi, operator_abi):
+def cli(ctx, rpc_url, network, lido_address, nos_registry_address, lido_abi, nos_registry_abi):
     """CLI utility to load Node Operators keys from file or network and check for duplicates and invalid signatures."""
 
     # Connect to network
@@ -53,11 +53,11 @@ def cli(ctx, rpc_url, network, contract_address, operator_address, contract_abi,
 
     # Load contracts from network
 
-    lido_abi = list(json.load(open(contract_abi)))
-    lido = w3.eth.contract(address=contract_address, abi=lido_abi)
+    lido_abi = list(json.load(open(lido_abi)))
+    lido = w3.eth.contract(address=lido_address, abi=lido_abi)
 
-    operators_abi = list(json.load(open(operator_abi)))
-    operators = w3.eth.contract(address=operator_address, abi=operators_abi)
+    operators_abi = list(json.load(open(nos_registry_abi)))
+    operators = w3.eth.contract(address=nos_registry_address, abi=operators_abi)
 
     # Setting up required items for validation
     click.secho("Loaded withdrawal credentials", fg="green")
