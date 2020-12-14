@@ -19,7 +19,7 @@ from py_ecc.bls import G2ProofOfPossession as bls
     "--rpc_url",
     help="Local node / Infura / Alchemy API url",
 )
-@click.option("--network", help="Network to use, Mainnet / Pyrmont")
+@click.option("--network", help="Network to use eg Mainnet / Pyrmont.")
 @click.option(
     "--lido_address",
     help="Address of the main contract.",
@@ -46,6 +46,7 @@ def cli(ctx, rpc_url, network, lido_address, nos_registry_address, lido_abi, nos
 
     w3 = Web3(Web3.HTTPProvider(rpc_url))
 
+    # Pyrmont needs a middleware
     if network.lower() == "pyrmont":
         w3.middleware_onion.inject(geth_poa_middleware, layer=0)
 
