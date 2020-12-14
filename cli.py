@@ -5,6 +5,7 @@ import click
 from web3 import Web3
 from web3.middleware import geth_poa_middleware
 
+from eth2deposit.settings import get_chain_setting
 from eth2deposit.utils.ssz import (
     compute_deposit_domain,
     compute_signing_root,
@@ -63,15 +64,7 @@ def cli(ctx, rpc_url, network, contract_address, operator_address, contract_abi,
     withdrawal_credentials = bytes(lido.functions.getWithdrawalCredentials().call())
 
     # Appropriate domains for needed network
-    if network.lower() == "pyrmont":
-        from eth2deposit.settings import PyrmontSetting
-
-        fork_version = PyrmontSetting.GENESIS_FORK_VERSION
-    else:
-        from eth2deposit.settings import MainnetSetting
-
-        fork_version = MainnetSetting.GENESIS_FORK_VERSION
-
+    fork_version = get_chain_setting(network.lower()).GENESIS_FORK_VERSION
     domain = compute_deposit_domain(fork_version=fork_version)
 
     # Passing computed items as context to command functions
