@@ -222,10 +222,10 @@ def format_proposed_keys_file(items):
     """Format input to the same data keys on the network"""
     for item in items:
         item["key"] = bytes.fromhex(item["pubkey"]) if item.get("pubkey", False) else item["key"]
-        item["deposit_signature"] = (
+        item["depositSignature"] = (
             bytes.fromhex(item["signature"])
             if item.get("signature", False)
-            else item["deposit_signature"]
+            else item["depositSignature"]
         )
     return items
 
@@ -265,12 +265,11 @@ def load_network_data(operators_contract):
 def list_signing_keys(operators_contract, op_id, key_count):
     """Load signing keys for a particular operator"""
 
-    signing_keys_keys = [
-        "index",
-        "key",
-        "deposit_signature",
-        "used",
-    ]
+    # Getting function data from contract ABI
+    function_data = next((x for x in operators_contract.abi if x["name"] == "getSigningKey"), None)
+
+    # Adding "index" and all output name keys
+    signing_keys_keys = ["index"] + [x["name"] for x in function_data["outputs"]]
 
     signing_keys_list = [
         dict(
@@ -304,7 +303,7 @@ def validate_key(key, withdrawal_credentials, domain):
     # TODO: Detailed info how it's being validated
 
     pubkey = key["key"]
-    signature = key["deposit_signature"]
+    signature = key["depositSignature"]
 
     # Minimum staking requirement of 32 ETH per validator
     REQUIRED_DEPOSIT_ETH = 32
