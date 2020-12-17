@@ -60,10 +60,11 @@ def cli(ctx, rpc_url, network, lido_address, nos_registry_address, lido_abi, nos
     operators_contract = w3.eth.contract(address=nos_registry_address, abi=operators_abi)
 
     # Setting up required items for validation
-    click.secho("Loaded withdrawal credentials", fg="green")
-    withdrawal_credentials = bytes(lido_contract.functions.getWithdrawalCredentials().call())
 
-    # Appropriate domains for needed network
+    withdrawal_credentials = bytes(lido_contract.functions.getWithdrawalCredentials().call())
+    click.secho("Loaded withdrawal credentials", fg="green")
+
+    # Appropriate domain for needed network
     fork_version = get_chain_setting(network.lower()).GENESIS_FORK_VERSION
     domain = compute_deposit_domain(fork_version=fork_version)
 
