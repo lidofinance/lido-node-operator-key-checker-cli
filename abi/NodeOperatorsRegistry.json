@@ -68,38 +68,6 @@
   },
   {
     "constant": true,
-    "inputs": [],
-    "name": "pool",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_ids",
-        "type": "uint256[]"
-      },
-      {
-        "name": "_usedSigningKeys",
-        "type": "uint64[]"
-      }
-    ],
-    "name": "updateUsedKeys",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": true,
     "inputs": [
       {
         "name": "_script",
@@ -129,6 +97,29 @@
     ],
     "payable": false,
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_numKeys",
+        "type": "uint256"
+      }
+    ],
+    "name": "assignNextSigningKeys",
+    "outputs": [
+      {
+        "name": "pubkeys",
+        "type": "bytes"
+      },
+      {
+        "name": "signatures",
+        "type": "bytes"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -175,6 +166,29 @@
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_totalRewardShares",
+        "type": "uint256"
+      }
+    ],
+    "name": "getRewardsDistribution",
+    "outputs": [
+      {
+        "name": "recipients",
+        "type": "address[]"
+      },
+      {
+        "name": "shares",
+        "type": "uint256[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -499,24 +513,6 @@
     "constant": false,
     "inputs": [
       {
-        "name": "_token",
-        "type": "address"
-      },
-      {
-        "name": "_totalReward",
-        "type": "uint256"
-      }
-    ],
-    "name": "distributeRewards",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
         "name": "_id",
         "type": "uint256"
       },
@@ -584,7 +580,7 @@
     "constant": false,
     "inputs": [
       {
-        "name": "_pool",
+        "name": "_lido",
         "type": "address"
       }
     ],
