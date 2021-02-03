@@ -1,2 +1,3 @@
-eth2deposit/
+.mypy_cache
 .DS_Store
+input.json

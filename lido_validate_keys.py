@@ -1,81 +1,71 @@
 import json
 
 import click
-from py_ecc.bls import G2ProofOfPossession as bls
-from web3 import Web3
-from web3.middleware import geth_poa_middleware
-
-from eth2deposit.settings import get_chain_setting
-from eth2deposit.utils.ssz import (
-    compute_deposit_domain,
-    compute_signing_root,
-    DepositMessage,
+from lido import (
+    get_operators_data,
+    get_operators_keys,
+    validate_keys_multi,
+    validate_key_list_multi,
+    find_duplicates,
+    spot_duplicates,
 )
 
 
 @click.group()
 @click.option(
-    "--rpc_url",
-    help="Local node / Infura / Alchemy API url",
+    "--max_multicall",
+    type=int,
+    required=False,
+    help="Batch amount of function calls to fit into one RPC call.",
 )
-@click.option("--network", help="Network to use eg Mainnet / Pyrmont.")
 @click.option(
     "--lido_address",
+    type=str,
+    required=False,
     help="Address of the main contract.",
 )
 @click.option(
-    "--nos_registry_address",
+    "--lido_abi_path",
+    type=str,
+    required=False,
+    help="ABI file path for the main contract.",
+)
+@click.option(
+    "--registry_address",
+    type=str,
+    required=False,
     help="Address of the operator contract.",
 )
 @click.option(
-    "--lido_abi",
-    default="abi/Lido.json",
-    help="ABI file path for contract.",
-)
-@click.option(
-    "--nos_registry_abi",
-    default="abi/NodeOperatorsRegistry.json",
+    "--registry_abi_path",
+    type=str,
+    required=False,
     help="ABI file path for operators contract.",
 )
 @click.pass_context
-def cli(ctx, rpc_url, network, lido_address, nos_registry_address, lido_abi, nos_registry_abi):
+def cli(ctx, max_multicall, lido_address, lido_abi_path, registry_address, registry_abi_path):
     """CLI utility to load Node Operators keys from file or network and check for duplicates and invalid signatures."""
 
-    # Connect to network
+    operators_data = get_operators_data(
+        registry_address=registry_address, registry_abi_path=registry_abi_path
+    )
+    click.secho("Loaded operators", fg="green")
 
-    w3 = Web3(Web3.HTTPProvider(rpc_url))
+    data_with_keys = get_operators_keys(
+        operators=operators_data,
+        max_multicall=max_multicall,
+        registry_address=registry_address,
+        registry_abi_path=registry_abi_path,
+    )
+    click.secho("Loaded operator keys", fg="green")
 
-    # Pyrmont needs a middleware
-    if network.lower() == "pyrmont":
-        w3.middleware_onion.inject(geth_poa_middleware, layer=0)
-
-    click.secho("Connected to the network", fg="green")
-
-    # Load contracts from network
-
-    lido_abi = json.load(open(lido_abi))
-    lido_contract = w3.eth.contract(address=lido_address, abi=lido_abi)
-
-    operators_abi = json.load(open(nos_registry_abi))
-    operators_contract = w3.eth.contract(address=nos_registry_address, abi=operators_abi)
-
-    # Setting up required items for validation
-
-    withdrawal_credentials = bytes(lido_contract.functions.getWithdrawalCredentials().call())
-    click.secho("Loaded withdrawal credentials", fg="green")
-
-    # Appropriate domain for needed network
-    fork_version = get_chain_setting(network.lower()).GENESIS_FORK_VERSION
-    domain = compute_deposit_domain(fork_version=fork_version)
-
-    # Fetching network data for operator contract
-    operators = load_network_data(operators_contract)
+    click.secho("-")
 
     # Passing computed items as context to command functions
     ctx.ensure_object(dict)
-    ctx.obj["operators"] = operators
-    ctx.obj["withdrawal_credentials"] = withdrawal_credentials
-    ctx.obj["domain"] = domain
+    ctx.obj["operators"] = data_with_keys
+    ctx.obj["lido_address"] = lido_address
+    ctx.obj["lido_abi_path"] = lido_abi_path
 
 
 @cli.command("validate_network_keys")
@@ -85,79 +75,89 @@ def validate_network_keys(ctx):
 
     # Loading variables from context
     operators = ctx.obj["operators"]
-    withdrawal_credentials = ctx.obj["withdrawal_credentials"]
-    domain = ctx.obj["domain"]
+    lido_address = ctx.obj["lido_address"]
+    lido_abi_path = ctx.obj["lido_abi_path"]
 
-    # Check for invalid signatures and finding duplicates
+    data_validated_keys = validate_keys_multi(
+        operators=operators,
+        lido_address=lido_address,
+        lido_abi_path=lido_abi_path,
+    )
+    click.secho("Done signature validation", fg="green")
 
-    for op_i, op in enumerate(operators):
+    data_found_duplicates = find_duplicates(operators=data_validated_keys)
+    click.secho("Done duplicate checks", fg="green")
 
-        if not op["keys"]:
-            click.echo("#%s %s has no keys" % (op["id"], op["name"]))
-            continue
+    click.secho("-")
 
-        with click.progressbar(
-            op["keys"], label="Checking #%s %s" % (op["id"], op["name"]), show_eta=False
-        ) as keys:
-            for key_i, key in enumerate(keys):
+    # Handling invalid signatures
+    invalid_signatures = []
 
-                # Checking if each key has a correct signature
-                operators[op_i]["keys"][key_i]["valid_signature"] = validate_key(
-                    key, withdrawal_credentials, domain
+    for op in data_found_duplicates:
+        for key in op["keys"]:
+            if not key["valid_signature"]:
+                invalid_signatures.append(
+                    {
+                        "key": key,
+                        "op_id": op["id"],
+                        "op_name": op["name"],
+                        "op_staking_limit": bool(op["stakingLimit"]),
+                    }
                 )
 
-                # Checking if each key is a duplicate
-                # TODO: this can be done in O(N) instead of O(N^2) if len(operators) > 100
+    if not invalid_signatures:
+        click.secho("No invalid signatures found", fg="green")
+    else:
+        click.secho("Invalid signatures found for keys:", fg="red")
+        for item in invalid_signatures:
+            click.secho(
+                "%s (%s) key #%s - OP Active: %s, Used: %s"
+                % (
+                    item["op_name"],
+                    item["op_id"],
+                    item["key"]["index"],
+                    item["op_staking_limit"],
+                    item["key"]["used"],
+                )
+            )
+            click.secho(item["key"]["key"].hex(), fg="red")
 
-                duplicates = find_duplicates(operators=operators, original_op=op, key=key)
-                operators[op_i]["keys"][key_i]["duplicate"] = bool(duplicates)
+    click.secho("-")
 
-                op["keys"][key_i]["duplicates"] = []
-                for duplicate_i, duplicate in enumerate(duplicates):
-                    operators[op_i]["keys"][key_i]["duplicates"].append(
-                        dict(
-                            op_id=duplicate["op"]["id"],
-                            op_name=duplicate["op"]["name"],
-                            index=duplicate["key"]["index"],
-                            approved=bool(duplicate["op"]["stakingLimit"]),
-                            used=duplicate["key"]["used"],
-                        )
-                    )
+    # Handling duplicates
+    with_duplicates = []
 
-    # Outputting every wrong data occurrence
-    invalid = 0
-    for op in operators:
+    for op in data_found_duplicates:
         for key in op["keys"]:
             if key["duplicate"]:
-                for duplicate in key["duplicates"]:
-                    click.secho(
-                        "%s's key %s (OP Approved: %s, Key Used: %s) is a duplicate of %s's key (OP Approved: %s, Key Used: %s)"
-                        % (
-                            op["name"],
-                            key["key"].hex(),
-                            op["stakingLimit"] > 0,
-                            key["used"],
-                            duplicate["op_name"],
-                            duplicate["approved"],
-                            duplicate["used"],
-                        ),
-                        fg="red",
-                    )
-                    invalid += 1
-            if not key["valid_signature"]:
-                click.secho(
-                    "%s's key %s has an invalid signature" % (op["name"], key["key"].hex()),
-                    fg="red",
-                )
-                invalid += 1
+                with_duplicates.append(key)
 
-    click.secho(
-        "%s occurrences of invalid data found" % invalid, fg="green" if not invalid else "red"
-    )
+    if not with_duplicates:
+        click.secho("No duplicates found", fg="green")
+    else:
+        click.secho("Duplicates found for keys:", fg="red")
+        for item_with_duplicates in with_duplicates:
+            click.secho(item_with_duplicates["key"].hex(), fg="red")
+
+            click.secho("Duplicates:")
+            for dup in item_with_duplicates["duplicates"]:
+                click.secho(
+                    "%s (%s) key #%s - Active: %s, Used: %s"
+                    % (
+                        dup["op"]["name"],
+                        dup["op"]["id"],
+                        dup["key"]["index"],
+                        bool(dup["op"]["stakingLimit"]),
+                        dup["key"]["used"],
+                    )
+                )
+
+    click.secho("Finished")
 
 
 @click.option(
     "--file",
+    type=str,
     default="input.json",
     help="JSON input file with proposed keys",
 )
@@ -167,159 +167,63 @@ def validate_file_keys(ctx, file):
     """Checking node operator keys from input file."""
 
     # Loading variables from context
-    withdrawal_credentials = ctx.obj["withdrawal_credentials"]
-    domain = ctx.obj["domain"]
     operators = ctx.obj["operators"]
 
     # Load and format JSON file
-    proposed_keys_raw = json.load(open(file))
-    proposed_keys = format_proposed_keys_file(proposed_keys_raw)
+    input_raw = json.load(open(file))
 
-    # Search for duplicates
-    click.secho("Searching for duplicates")
-    duplicates = []
-    for proposed_keys_item in proposed_keys:
-        duplicate = find_duplicates(operators=operators, key=proposed_keys_item)
-        if duplicate:
-            duplicates.append(duplicate)
-    if not duplicates:
-        click.secho("No duplicate keys found", fg="green")
-    else:
-        click.secho("Duplicate keys found:", fg="red")
-        for duplicate_occurrences in duplicates:
-            for duplicate_occurrence in duplicate_occurrences:
-                click.secho(
-                    "Key %s is a duplicate of %s's key (OP Approved: %s, Key Used: %s)"
-                    % (
-                        duplicate_occurrence["key"]["key"].hex(),
-                        duplicate_occurrence["op"]["name"],
-                        duplicate_occurrence["op"]["stakingLimit"] > 0,
-                        duplicate_occurrence["key"]["used"],
-                    ),
-                    fg="red",
-                )
+    # Formatting eth2deposit cli input fields
+    input = []
+    for i, item in enumerate(input_raw):
+        item["key"] = bytes.fromhex(item["pubkey"])
+        item["depositSignature"] = bytes.fromhex(item["signature"])
+        del item["pubkey"]
+        del item["signature"]
+        input.append(item)
 
-    # Check signatures
-    invalid_signatures = []
-    with click.progressbar(proposed_keys, label="Checking signatures", show_eta=False) as keys:
-        for proposed_keys_item in keys:
-            valid = validate_key(proposed_keys_item, withdrawal_credentials, domain)
-
-            if not valid:
-                invalid_signatures.append(proposed_keys_item["pubkey"])
+    # Handling invalid signatures
+    click.secho("Searching for invalid signatures")
+    invalid_signatures = validate_key_list_multi(input)
 
     if not invalid_signatures:
         click.secho("No invalid signatures found", fg="green")
     else:
         click.secho("Invalid signatures found for keys:", fg="red")
-        for item in invalid_signatures:
-            click.secho(item, fg="red")
+        for key in invalid_signatures:
+            click.secho(key["key"].hex(), fg="red")
 
+    click.secho("-")
 
-# Common helpers
+    # Handling duplicates
+    with_duplicates = []
+    with click.progressbar(input, label="Searching for duplicates", show_eta=False) as keys:
+        for key in keys:
+            duplicates_found = spot_duplicates(operators, key)
 
+            if duplicates_found:
+                with_duplicates.append({"key": key["key"], "duplicates": duplicates_found})
 
-def format_proposed_keys_file(items):
-    """Format input to the same data keys on the network"""
-    for item in items:
-        item["key"] = bytes.fromhex(item["pubkey"]) if item.get("pubkey", False) else item["key"]
-        item["depositSignature"] = (
-            bytes.fromhex(item["signature"])
-            if item.get("signature", False)
-            else item["depositSignature"]
-        )
-    return items
+    if not with_duplicates:
+        click.secho("No duplicates found", fg="green")
+    else:
+        click.secho("Duplicates found for keys:", fg="red")
+        for item_with_duplicates in with_duplicates:
+            click.secho(item_with_duplicates["key"].hex(), fg="red")
 
+            click.secho("Duplicate of:")
+            for dup in item_with_duplicates["duplicates"]:
+                click.secho(
+                    "%s (%s) key #%s - OP Active: %s, Used: %s"
+                    % (
+                        dup["op"]["name"],
+                        dup["op"]["id"],
+                        dup["key"]["index"],
+                        bool(dup["op"]["stakingLimit"]),
+                        dup["key"]["used"],
+                    )
+                )
 
-def load_network_data(operators_contract):
-    """Load all node operators and their data from the network"""
-
-    # Getting total operators count
-    opcount = operators_contract.functions.getNodeOperatorsCount().call()
-    click.echo("There are %s operators on the network" % opcount)
-
-    # Get each operator's data, add id
-    operators_raw = [
-        [i] + operators_contract.functions.getNodeOperator(_id=i, _fullInfo=True).call()
-        for i in range(opcount)
-    ]
-
-    # Assign keys for the data
-
-    # Getting function data from contract ABI
-    function_data = next(
-        (x for x in operators_contract.abi if x["name"] == "getNodeOperator"), None
-    )
-
-    # Adding "id" and all output name keys
-    op_keys = ["id"] + [x["name"] for x in function_data["outputs"]]
-    operators_data = [dict(zip(op_keys, op)) for op in operators_raw]
-
-    # Get and add signing keys to node operators
-    with click.progressbar(operators_data, label="Getting all signing keys", show_eta=False) as ops:
-        for op in ops:
-            op["keys"] = list_signing_keys(operators_contract, op["id"], op["totalSigningKeys"])
-
-    return operators_data
-
-
-def list_signing_keys(operators_contract, op_id, key_count):
-    """Load signing keys for a particular operator"""
-
-    # Getting function data from contract ABI
-    function_data = next((x for x in operators_contract.abi if x["name"] == "getSigningKey"), None)
-
-    # Adding "index" and all output name keys
-    signing_keys_keys = ["index"] + [x["name"] for x in function_data["outputs"]]
-
-    signing_keys_list = [
-        dict(
-            zip(
-                signing_keys_keys,
-                [i]
-                + operators_contract.functions.getSigningKey(_operator_id=op_id, _index=i).call(),
-            )
-        )
-        for i in range(0, key_count)
-    ]
-
-    return signing_keys_list
-
-
-def find_duplicates(operators, key, original_op=None):
-    """Compare every available key with each other to spot duplicates"""
-    duplicates_found = []
-    for operator in operators:
-        for second_key in operator["keys"]:
-            if key["key"] == second_key["key"]:
-                if not original_op:
-                    duplicates_found.append({"op": operator, "key": second_key})
-                elif (original_op["id"], key["index"]) != (operator["id"], second_key["index"]):
-                    duplicates_found.append({"op": operator, "key": second_key})
-    return duplicates_found
-
-
-def validate_key(key, withdrawal_credentials, domain):
-    """Run signature validation on a key"""
-    # TODO: Detailed info how it's being validated
-
-    pubkey = key["key"]
-    signature = key["depositSignature"]
-
-    # Minimum staking requirement of 32 ETH per validator
-    REQUIRED_DEPOSIT_ETH = 32
-    ETH2GWEI = 10 ** 9
-    amount = REQUIRED_DEPOSIT_ETH * ETH2GWEI
-
-    deposit_message = DepositMessage(
-        pubkey=pubkey,
-        withdrawal_credentials=withdrawal_credentials,
-        amount=amount,
-    )
-
-    signing_root = compute_signing_root(deposit_message, domain)
-
-    return bls.Verify(pubkey, signing_root, signature)
+    click.secho("Finished")
 
 
 if __name__ == "__main__":

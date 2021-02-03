@@ -1,3 +1,0 @@
-[submodule "eth2.0-deposit-cli"]
-	path = eth2.0-deposit-cli
-	url = https://github.com/ethereum/eth2.0-deposit-cli.git
