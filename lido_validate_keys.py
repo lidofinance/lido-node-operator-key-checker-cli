@@ -111,7 +111,7 @@ def validate_network_keys(ctx):
         click.secho("Invalid signatures found for keys:", fg="red")
         for item in invalid_signatures:
             click.secho(
-                "%s (%s) key #%s - OP Active: %s, Used: %s"
+                "%s (%s) key #%s - OP Active: %s, Used: %s:"
                 % (
                     item["op_name"],
                     item["op_id"],
@@ -142,7 +142,7 @@ def validate_network_keys(ctx):
             click.secho("Duplicates:")
             for dup in item_with_duplicates["duplicates"]:
                 click.secho(
-                    "%s (%s) key #%s - Active: %s, Used: %s"
+                    "- %s (%s) key #%s - Active: %s, Used: %s"
                     % (
                         dup["op"]["name"],
                         dup["op"]["id"],
@@ -174,7 +174,7 @@ def validate_file_keys(ctx, file):
 
     # Formatting eth2deposit cli input fields
     input = []
-    for i, item in enumerate(input_raw):
+    for item in input_raw:
         item["key"] = bytes.fromhex(item["pubkey"])
         item["depositSignature"] = bytes.fromhex(item["signature"])
         del item["pubkey"]
@@ -213,7 +213,7 @@ def validate_file_keys(ctx, file):
             click.secho("Duplicate of:")
             for dup in item_with_duplicates["duplicates"]:
                 click.secho(
-                    "%s (%s) key #%s - OP Active: %s, Used: %s"
+                    "- %s (%s) key #%s - OP Active: %s, Used: %s"
                     % (
                         dup["op"]["name"],
                         dup["op"]["id"],
