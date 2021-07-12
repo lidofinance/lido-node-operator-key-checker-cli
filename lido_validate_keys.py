@@ -83,10 +83,10 @@ def validate_network_keys(ctx):
         lido_address=lido_address,
         lido_abi_path=lido_abi_path,
     )
-    click.secho("Done signature validation", fg="green")
+    click.secho("Completed signature validation", fg="green")
 
     data_found_duplicates = find_duplicates(operators=data_validated_keys)
-    click.secho("Done duplicate checks", fg="green")
+    click.secho("Completed duplicate checks", fg="green")
 
     click.secho("-")
 
@@ -108,10 +108,12 @@ def validate_network_keys(ctx):
     if not invalid_signatures:
         click.secho("No invalid signatures found", fg="green")
     else:
-        click.secho("Invalid signatures found for keys:", fg="red")
+        click.secho(
+            "{} Invalid signatures found for keys:".format(len(invalid_signatures)), fg="red"
+        )
         for item in invalid_signatures:
             click.secho(
-                "%s (%s) key #%s - OP Active: %s, Used: %s:"
+                "%s (#%s) key #%s - OP Active: %s, Key Used: %s:"
                 % (
                     item["op_name"],
                     item["op_id"],
@@ -135,14 +137,14 @@ def validate_network_keys(ctx):
     if not with_duplicates:
         click.secho("No duplicates found", fg="green")
     else:
-        click.secho("Duplicates found for keys:", fg="red")
+        click.secho("{} Duplicates found:".format(len(with_duplicates)), fg="red")
         for item_with_duplicates in with_duplicates:
             click.secho(item_with_duplicates["key"].hex(), fg="red")
 
             click.secho("Duplicates:")
             for dup in item_with_duplicates["duplicates"]:
                 click.secho(
-                    "- %s (%s) key #%s - Active: %s, Used: %s"
+                    "- %s (#%s) key #%s - OP Active: %s, Key Used: %s"
                     % (
                         dup["op"]["name"],
                         dup["op"]["id"],
@@ -213,7 +215,7 @@ def validate_file_keys(ctx, file):
             click.secho("Duplicate of:")
             for dup in item_with_duplicates["duplicates"]:
                 click.secho(
-                    "- %s (%s) key #%s - OP Active: %s, Used: %s"
+                    "- %s (#%s) key #%s - OP Active: %s, Key Used: %s"
                     % (
                         dup["op"]["name"],
                         dup["op"]["id"],
