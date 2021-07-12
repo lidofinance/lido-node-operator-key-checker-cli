@@ -199,7 +199,7 @@ def validate_file_keys(ctx, file):
 
     # Handling invalid signatures
     click.secho("Searching for invalid signatures")
-    invalid_signatures = lido.validate_key_list_multi(input)
+    invalid_signatures = lido.validate_key_list_multi(input, strict=True)
 
     if not invalid_signatures:
         click.secho("No invalid signatures found", fg="green")
