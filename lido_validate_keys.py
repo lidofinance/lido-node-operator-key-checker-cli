@@ -1,17 +1,18 @@
 import json
 
 import click
-from lido import (
-    get_operators_data,
-    get_operators_keys,
-    validate_keys_multi,
-    validate_key_list_multi,
-    find_duplicates,
-    spot_duplicates,
-)
+
+from web3 import Web3
+from lido import Lido
 
 
 @click.group()
+@click.option(
+    "--rpc",
+    type=str,
+    required=True,
+    help="RPC provider for network calls.",
+)
 @click.option(
     "--max_multicall",
     type=int,
@@ -43,29 +44,44 @@ from lido import (
     help="ABI file path for operators contract.",
 )
 @click.pass_context
-def cli(ctx, max_multicall, lido_address, lido_abi_path, registry_address, registry_abi_path):
+def cli(ctx, rpc, max_multicall, lido_address, lido_abi_path, registry_address, registry_abi_path):
     """CLI utility to load Node Operators keys from file or network and check for duplicates and invalid signatures."""
 
-    operators_data = get_operators_data(
-        registry_address=registry_address, registry_abi_path=registry_abi_path
-    )
-    click.secho("Loaded operators", fg="green")
+    w3 = Web3(Web3.HTTPProvider(rpc))
 
-    data_with_keys = get_operators_keys(
-        operators=operators_data,
-        max_multicall=max_multicall,
+    if w3.eth.chainId == 5:
+        from web3.middleware import geth_poa_middleware
+
+        w3.middleware_onion.inject(geth_poa_middleware, layer=0)
+
+    lido = Lido(
+        w3,
+        lido_address=lido_address,
         registry_address=registry_address,
-        registry_abi_path=registry_abi_path,
+        lido_abi_path=lido_abi_path,  # the file-path to the contract's ABI
+        registry_abi_path=registry_abi_path,  # the file-path to the contract's ABI
+        max_multicall=max_multicall,
     )
-    click.secho("Loaded operator keys", fg="green")
+
+    operators_data = lido.get_operators_data()
+    click.secho("Loaded {} operators".format(len(operators_data)), fg="green")
+
+    data_with_keys = lido.get_operators_keys(
+        operators_data,
+    )
+
+    all_keys_count = 0
+    for op in data_with_keys:
+        all_keys_count += len(op["keys"])
+
+    click.secho("Loaded {} operator keys".format(all_keys_count), fg="green")
 
     click.secho("-")
 
     # Passing computed items as context to command functions
     ctx.ensure_object(dict)
+    ctx.obj["lido"] = lido
     ctx.obj["operators"] = data_with_keys
-    ctx.obj["lido_address"] = lido_address
-    ctx.obj["lido_abi_path"] = lido_abi_path
 
 
 @cli.command("validate_network_keys")
@@ -74,18 +90,15 @@ def validate_network_keys(ctx):
     """Checking node operator keys from network."""
 
     # Loading variables from context
+    lido = ctx.obj["lido"]
     operators = ctx.obj["operators"]
-    lido_address = ctx.obj["lido_address"]
-    lido_abi_path = ctx.obj["lido_abi_path"]
 
-    data_validated_keys = validate_keys_multi(
-        operators=operators,
-        lido_address=lido_address,
-        lido_abi_path=lido_abi_path,
+    data_validated_keys = lido.validate_keys_multi(
+        operators,
     )
     click.secho("Completed signature validation", fg="green")
 
-    data_found_duplicates = find_duplicates(operators=data_validated_keys)
+    data_found_duplicates = lido.find_duplicates(data_validated_keys)
     click.secho("Completed duplicate checks", fg="green")
 
     click.secho("-")
@@ -169,6 +182,7 @@ def validate_file_keys(ctx, file):
     """Checking node operator keys from input file."""
 
     # Loading variables from context
+    lido = ctx.obj["lido"]
     operators = ctx.obj["operators"]
 
     # Load and format JSON file
@@ -185,7 +199,7 @@ def validate_file_keys(ctx, file):
 
     # Handling invalid signatures
     click.secho("Searching for invalid signatures")
-    invalid_signatures = validate_key_list_multi(input)
+    invalid_signatures = lido.validate_key_list_multi(input)
 
     if not invalid_signatures:
         click.secho("No invalid signatures found", fg="green")
@@ -200,7 +214,7 @@ def validate_file_keys(ctx, file):
     with_duplicates = []
     with click.progressbar(input, label="Searching for duplicates", show_eta=False) as keys:
         for key in keys:
-            duplicates_found = spot_duplicates(operators, key)
+            duplicates_found = lido.spot_duplicates(operators, key)
 
             if duplicates_found:
                 with_duplicates.append({"key": key["key"], "duplicates": duplicates_found})
