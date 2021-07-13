@@ -6,7 +6,7 @@ Run `./init.sh` install Python dependencies
 
 ## Running
 
-### RPC Provider environment variable
+### RPC Provider
 
 This is the only thing required, the rest will be handled automatically unless overridden.
 
