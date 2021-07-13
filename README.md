@@ -23,7 +23,7 @@ python lido_validate_keys.py --rpc https://mainnet.provider.io/v3/XXX --max_mult
 ```
 
 ```
---rpc                       RPC provider for network calls.
+--rpc                                   RPC provider for network calls.
 --max_multicall				Batch amount of function calls to fit into one RPC call.
 --lido_address				Address of the main contract.
 --lido_abi_path				ABI file path for the main contract.
@@ -55,7 +55,7 @@ python lido_validate_keys.py --rpc https://mainnet.provider.io/v3/XXX validate_f
 Example with custom file path:
 
 ```
-python lido_validate_keys.py --rpc =https://mainnet.provider.io/v3/XXX validate_file_keys --file input.json
+python lido_validate_keys.py --rpc https://mainnet.provider.io/v3/XXX validate_file_keys --file input.json
 ```
 
 You can also get all commands and options via `python lido_validate_keys.py --help`
