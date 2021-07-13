@@ -1,4 +1,4 @@
-# Node Operator Key Checker Cli
+# Node Operator Key Checker CLI
 
 ## Installation
 
