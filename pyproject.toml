@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "lido-cli"
+version = "1.1.0"
+description = "Lido CLI tool for node operator key validation"
+authors = ["Lido <info@lido.fi>"]
+license = "MIT"
+readme = 'README.md'
+repository = "https://github.com/lidofinance/lido-node-operator-key-checker-cli"
+homepage = "https://lido.fi"
+packages = [
+	{ include = "lido_validate_keys.py" },
+]
+
+[tool.poetry.scripts]
+lido-cli = 'lido_validate_keys:cli'
+
+[tool.poetry.dependencies]
+python = ">3.7.1,<4"
+lido = "1.1.0"
+click = "8.0.1"
+colorama = "0.4.4"
+
+[tool.poetry.dev-dependencies]
+bumpversion = "^0.6.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

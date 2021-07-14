@@ -2,7 +2,17 @@
 
 ## Installation
 
-Run `./init.sh` install Python dependencies
+You can get this tool using `pip`:
+
+```
+pip install lido-cli
+```
+
+Or if you cloned this repository, install Python dependencies via:
+
+```
+./init.sh
+```
 
 ## Running
 
