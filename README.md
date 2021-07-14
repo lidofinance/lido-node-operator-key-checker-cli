@@ -21,7 +21,7 @@ Or if you cloned this repository, install Python dependencies via:
 This is the only thing required, the rest will be handled automatically unless overridden.
 
 ```
-python3 lido_validate_keys.py --rpc https://mainnet.provider.io/v3/XXX validate_network_keys
+python lido_validate_keys.py --rpc https://mainnet.provider.io/v3/XXX validate_network_keys
 ```
 
 ### Optional Parameters
