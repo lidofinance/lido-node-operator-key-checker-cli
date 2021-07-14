@@ -16,9 +16,7 @@ Or if you cloned this repository, install Python dependencies via:
 
 Depending on how it's installed use:
 
-`lido-cli ...options command ...options`
-or
-`python lido_validate_keys.py ...options command ...options`
+`lido-cli ...opts command ...opts` or `python lido_validate_keys.py ...opts command ...opts`
 
 ## Running
 
