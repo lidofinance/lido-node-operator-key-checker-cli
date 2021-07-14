@@ -14,6 +14,12 @@ Or if you cloned this repository, install Python dependencies via:
 ./init.sh
 ```
 
+Depending on how it's installed use:
+
+`lido-cli ...options command ...options`
+or
+`python lido_validate_keys.py ...options command ...options`
+
 ## Running
 
 ### RPC Provider
@@ -21,7 +27,7 @@ Or if you cloned this repository, install Python dependencies via:
 This is the only thing required, the rest will be handled automatically unless overridden.
 
 ```
-python lido_validate_keys.py --rpc https://mainnet.provider.io/v3/XXX validate_network_keys
+lido-cli --rpc https://mainnet.provider.io/v3/XXX validate_network_keys
 ```
 
 ### Optional Parameters
@@ -29,7 +35,7 @@ python lido_validate_keys.py --rpc https://mainnet.provider.io/v3/XXX validate_n
 By default CLI will use embedded strings and ABIs, but you can specify your own arguments if needed. Make sure to use them on CLI itself and not on the command eg:
 
 ```
-python lido_validate_keys.py --rpc https://mainnet.provider.io/v3/XXX --max_multicall 300 --lido_address 0x123 --lido_abi_path /Users/x/xx.json --registry_address 0x123 --registry_abi_path /Users/x/xx.json validate_network_keys
+lido-cli --rpc https://mainnet.provider.io/v3/XXX --max_multicall 300 --lido_address 0x123 --lido_abi_path /Users/x/xx.json --registry_address 0x123 --registry_abi_path /Users/x/xx.json validate_network_keys
 ```
 
 ```
@@ -48,7 +54,7 @@ Command: `validate_network_keys`
 Example:
 
 ```
-python lido_validate_keys.py --rpc https://mainnet.provider.io/v3/XXX validate_network_keys
+lido-cli --rpc https://mainnet.provider.io/v3/XXX validate_network_keys
 ```
 
 ### Checking Keys from File
@@ -59,13 +65,13 @@ Specify the input file via `--file` or copy it as `input.json` to the cli folder
 Example with default file location:
 
 ```
-python lido_validate_keys.py --rpc https://mainnet.provider.io/v3/XXX validate_file_keys
+lido-cli --rpc https://mainnet.provider.io/v3/XXX validate_file_keys
 ```
 
 Example with custom file path:
 
 ```
-python lido_validate_keys.py --rpc https://mainnet.provider.io/v3/XXX validate_file_keys --file input.json
+lido-cli --rpc https://mainnet.provider.io/v3/XXX validate_file_keys --file input.json
 ```
 
 You can also get all commands and options via `python lido_validate_keys.py --help`
