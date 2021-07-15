@@ -159,11 +159,11 @@ def validate_network_keys(ctx):
                 click.secho(
                     "- %s (#%s) key #%s - OP Active: %s, Key Used: %s"
                     % (
-                        dup["op"]["name"],
-                        dup["op"]["id"],
-                        dup["key"]["index"],
-                        bool(dup["op"]["stakingLimit"]),
-                        dup["key"]["used"],
+                        dup["op_name"],
+                        dup["op_id"],
+                        dup["index"],
+                        dup["approved"],
+                        dup["used"],
                     )
                 )
 
