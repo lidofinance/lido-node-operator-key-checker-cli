@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lido-cli"
-version = "1.2.0"
+version = "1.2.1"
 description = "Lido CLI tool for node operator key validation"
 authors = ["Lido <info@lido.fi>"]
 license = "MIT"
