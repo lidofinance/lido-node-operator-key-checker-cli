@@ -145,17 +145,35 @@ def validate_network_keys(ctx):
     for op in data_found_duplicates:
         for key in op["keys"]:
             if key["duplicate"]:
-                with_duplicates.append(key)
+                with_duplicates.append(
+                    {
+                        "key": key,
+                        "op_name": op["name"],
+                        "op_id": op["id"],
+                        "op_approved": bool(op["stakingLimit"]),
+                    }
+                )
 
     if not with_duplicates:
         click.secho("No duplicates found", fg="green")
     else:
         click.secho("{} Duplicates found:".format(len(with_duplicates)), fg="red")
         for item_with_duplicates in with_duplicates:
-            click.secho(item_with_duplicates["key"].hex(), fg="red")
+            click.secho(item_with_duplicates["key"]["key"].hex(), fg="red")
 
-            click.secho("Duplicates:")
-            for dup in item_with_duplicates["duplicates"]:
+            click.secho(
+                "%s (#%s) key #%s - OP Active: %s, Key Used: %s"
+                % (
+                    item_with_duplicates["op_name"],
+                    item_with_duplicates["op_id"],
+                    item_with_duplicates["key"]["index"],
+                    item_with_duplicates["op_approved"],
+                    item_with_duplicates["key"]["used"],
+                )
+            )
+
+            click.secho("Duplicates of this key:")
+            for dup in item_with_duplicates["key"]["duplicates"]:
                 click.secho(
                     "- %s (#%s) key #%s - OP Active: %s, Key Used: %s"
                     % (
