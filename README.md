@@ -37,13 +37,12 @@ lido-cli --rpc https://mainnet.provider.io/v3/XXX --max_multicall 300 --lido_add
 ```
 
 ```
---rpc						RPC provider for network calls.
---max_multicall				Batch amount of function calls to fit into one RPC call.
---lido_address				Address of the main contract.
---lido_abi_path				ABI file path for the main contract.
---registry_address			Address of the operator contract.
---registry_abi_path			ABI file path for operators contract.
---clear_cache				Clear cache used by fast mode.
+--rpc                   RPC provider for network calls.
+--max_multicall         Batch amount of function calls to fit into one RPC call.
+--lido_address          Address of the main contract.
+--lido_abi_path         ABI file path for the main contract.
+--registry_address      Address of the operator contract.
+--registry_abi_path     ABI file path for operators contract.
 ```
 
 ### Checking Network Keys
@@ -65,7 +64,13 @@ Command: `validate_network_keys_fast`
 Example:
 
 ```
-lido-cli --rpc https://mainnet.provider.io/v3/XXX --clear_cache=False validate_network_keys_fast
+lido-cli --rpc https://mainnet.provider.io/v3/XXX validate_network_keys_fast
+```
+
+Clear cache:
+
+```
+lido-cli --rpc https://mainnet.provider.io/v3/XXX validate_network_keys_fast --clear_cache
 ```
 
 ### Checking Keys from File

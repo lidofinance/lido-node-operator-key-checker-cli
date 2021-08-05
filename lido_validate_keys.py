@@ -47,14 +47,8 @@ from helpers import filter_keys, keys_len, merge_keys
     required=False,
     help="ABI file path for operators contract.",
 )
-@click.option(
-    "--clear_cache",
-    type=bool,
-    required=False,
-    help="Clear Node Operators keys cache",
-)
 @click.pass_context
-def cli(ctx, rpc, max_multicall, lido_address, lido_abi_path, registry_address, registry_abi_path, clear_cache):
+def cli(ctx, rpc, max_multicall, lido_address, lido_abi_path, registry_address, registry_abi_path):
     """CLI utility to load Node Operators keys from file or network and check for duplicates and invalid signatures."""
 
     w3 = Web3(Web3.HTTPProvider(rpc))
@@ -64,11 +58,6 @@ def cli(ctx, rpc, max_multicall, lido_address, lido_abi_path, registry_address, 
         from web3.middleware import geth_poa_middleware
 
         w3.middleware_onion.inject(geth_poa_middleware, layer=0)
-
-    if clear_cache == True:
-        clear_keys_cache(chainId)
-        click.secho("Cache cleared for chain id: {}".format(chainId), fg="green")
-        click.secho("-")
 
     lido = Lido(
         w3,
@@ -101,8 +90,13 @@ def cli(ctx, rpc, max_multicall, lido_address, lido_abi_path, registry_address, 
 
 
 @cli.command("validate_network_keys_fast")
+@click.option(
+    "--clear_cache",
+    is_flag=True,
+    help="Clear node operators keys cache",
+)
 @click.pass_context
-def validate_network_keys_fast(ctx):
+def validate_network_keys_fast(ctx, clear_cache):
     """Checking node operator keys from network with cache."""
 
     # Loading variables from context
@@ -110,6 +104,11 @@ def validate_network_keys_fast(ctx):
     operators = ctx.obj["operators"]
     chainId = ctx.obj["chainId"]
     wc = ctx.obj["withdrawal_credentials"]
+
+    if clear_cache:
+        clear_keys_cache(chainId)
+        click.secho("Cache cleared for chain id: {}".format(chainId), fg="green")
+        click.secho("-")
 
     operators_used_keys = filter_keys(operators, lambda key: key["used"] == True)
     operators_unused_keys = filter_keys(operators, lambda key: key["used"] != True)
