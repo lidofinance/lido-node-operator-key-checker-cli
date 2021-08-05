@@ -8,7 +8,7 @@ readme = 'README.md'
 repository = "https://github.com/lidofinance/lido-node-operator-key-checker-cli"
 homepage = "https://lido.fi"
 packages = [
-	{ include = "lido_validate_keys.py" },
+	{ include = "*.py" },
 ]
 
 [tool.poetry.scripts]
