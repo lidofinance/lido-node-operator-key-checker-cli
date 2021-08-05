@@ -1,4 +1,5 @@
 import json
+from typing import List
 
 import click
 
@@ -7,7 +8,7 @@ from lido import Lido
 from lido.contracts.w3_contracts import get_contract
 
 from cache import get_keys_from_cache, save_keys_to_cache, clear_keys_cache
-from helpers import filter_keys, keys_len, merge_keys
+from helpers import filter_keys, keys_len, merge_keys, pick_by, count_by
 
 
 @click.group()
@@ -353,6 +354,21 @@ def validate_file_keys(ctx, file):
         del item["pubkey"]
         del item["signature"]
         input.append(item)
+
+    # Handling duplicates among input.json file
+    click.secho("Checking '%s' file" % file)
+    input_json_keys = [item['key'] for item in input]  # type: List[bytes]
+    input_json_key_counts = count_by(input_json_keys, lambda i: i)
+    input_json_duplicates = pick_by(input_json_key_counts, lambda qty, _: qty > 1)
+
+    if len(input_json_duplicates) > 0:
+        click.secho("Found duplicated entries in '%s' for keys:" % file, fg="red")
+        for key, _ in input_json_duplicates.items():
+            click.secho(key.hex(), fg="red")
+    else:
+        click.secho("No duplicates found in '%s'" % file, fg="green")
+
+    click.secho("-")
 
     # Handling invalid signatures
     click.secho("Searching for invalid signatures")
