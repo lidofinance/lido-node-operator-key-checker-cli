@@ -2,6 +2,7 @@ import click
 import dbm
 import json
 
+from typing import List, Dict
 from os.path import expanduser, join
 
 home_user_dir = expanduser("~")
@@ -33,7 +34,7 @@ def check_wc(cache, wc: bytes):
         exit()
 
 
-def get_keys_from_cache(chainId: int, wc: bytes, operators: list[dict]):
+def get_keys_from_cache(chainId: int, wc: bytes, operators: List[Dict]):
     operators_cached_keys = []
     operators_new_keys = []
 
@@ -64,7 +65,7 @@ def get_keys_from_cache(chainId: int, wc: bytes, operators: list[dict]):
     return operators_cached_keys, operators_new_keys
 
 
-def save_keys_to_cache(chainId: int, wc: bytes, operators: list[dict]):
+def save_keys_to_cache(chainId: int, wc: bytes, operators: List[Dict]):
     with open_cache_file(chainId) as cache:
         check_wc(cache, wc)
         cache["wc"] = wc.hex()

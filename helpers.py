@@ -1,4 +1,4 @@
-from typing import Callable, TypeVar, Dict, List, Any
+from typing import Callable, TypeVar, Dict, List
 
 T = TypeVar('T')
 K = TypeVar('K')
@@ -6,11 +6,11 @@ V = TypeVar('V')
 R = TypeVar('R')
 
 
-def keys_len(operators: list[dict]):
+def keys_len(operators: List[Dict]):
     return sum([len(operator["keys"]) for operator in operators])
 
 
-def merge_keys(lists: list[list[dict]]):
+def merge_keys(lists: List[List[Dict]]):
     first_operators = lists[0]
     merged_operators = []
 
@@ -25,7 +25,7 @@ def merge_keys(lists: list[list[dict]]):
     return merged_operators
 
 
-def filter_keys(operators: list[dict], callback):
+def filter_keys(operators: List[Dict], callback):
     return [{**operator, "keys": [key for key in operator["keys"] if callback(key)]} for operator in operators]
 
 
