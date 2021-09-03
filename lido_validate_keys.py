@@ -71,7 +71,7 @@ def validate_network_keys(ctx):
 @click.option(
     "--file",
     type=str,
-    default="input.json",
+    required=True,
     help="JSON input file with proposed keys",
 )
 @cli.command("validate_file_keys")
