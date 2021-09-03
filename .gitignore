@@ -2,3 +2,6 @@
 .DS_Store
 input.json
 dist
+
+.idea
+__pycache__

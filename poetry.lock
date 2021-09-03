@@ -78,14 +78,6 @@ python-versions = "*"
 bump2version = "*"
 
 [[package]]
-name = "cached-property"
-version = "1.5.2"
-description = "A decorator for caching properties in classes."
-category = "main"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "certifi"
 version = "2021.5.30"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -103,7 +95,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "charset-normalizer"
-version = "2.0.1"
+version = "2.0.4"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
 category = "main"
 optional = false
@@ -168,7 +160,7 @@ tools = ["hypothesis (>=3.6.1,<4)"]
 
 [[package]]
 name = "eth-account"
-version = "0.5.4"
+version = "0.5.5"
 description = "eth-account: Sign Ethereum transactions and messages with local private keys"
 category = "main"
 optional = false
@@ -185,21 +177,20 @@ hexbytes = ">=0.1.0,<1"
 rlp = ">=1.0.0,<3"
 
 [package.extras]
-dev = ["Sphinx (>=1.6.5,<2)", "bumpversion (>=0.5.3,<1)", "flake8 (==3.7.9)", "hypothesis (>=4.18.0,<5)", "ipython", "isort (>=4.2.15,<5)", "mypy (==0.701)", "pydocstyle (>=3.0.0,<4)", "pytest-watch (>=4.1.0,<5)", "pytest-xdist", "pytest (>=4.4.0,<5)", "sphinx-rtd-theme (>=0.1.9)", "towncrier (>=19.2.0,<20)", "tox (>=2.9.1,<3)", "twine", "wheel"]
-doc = ["Sphinx (>=1.6.5,<2)", "sphinx-rtd-theme (>=0.1.9)", "towncrier (>=19.2.0,<20)"]
-lint = ["flake8 (==3.7.9)", "isort (>=4.2.15,<5)", "mypy (==0.701)", "pydocstyle (>=3.0.0,<4)"]
-test = ["hypothesis (>=4.18.0,<5)", "pytest-xdist", "pytest (>=4.4.0,<5)", "tox (>=2.9.1,<3)"]
+dev = ["bumpversion (>=0.5.3,<1)", "pytest-watch (>=4.1.0,<5)", "wheel", "twine", "ipython", "hypothesis (>=4.18.0,<5)", "pytest (==5.4.1)", "pytest-xdist", "tox (==3.14.6)", "flake8 (==3.7.9)", "isort (>=4.2.15,<5)", "mypy (==0.770)", "pydocstyle (>=5.0.0,<6)", "Sphinx (>=1.6.5,<2)", "sphinx-rtd-theme (>=0.1.9,<1)", "towncrier (>=19.2.0,<20)"]
+doc = ["Sphinx (>=1.6.5,<2)", "sphinx-rtd-theme (>=0.1.9,<1)", "towncrier (>=19.2.0,<20)"]
+lint = ["flake8 (==3.7.9)", "isort (>=4.2.15,<5)", "mypy (==0.770)", "pydocstyle (>=5.0.0,<6)"]
+test = ["hypothesis (>=4.18.0,<5)", "pytest (==5.4.1)", "pytest-xdist", "tox (==3.14.6)"]
 
 [[package]]
 name = "eth-hash"
-version = "0.3.1"
+version = "0.3.2"
 description = "eth-hash: The Ethereum hashing function, keccak256, sometimes (erroneously) called sha3"
 category = "main"
 optional = false
 python-versions = ">=3.5, <4"
 
 [package.dependencies]
-eth-utils = ">=1,<2"
 pycryptodome = {version = ">=3.6.6,<4", optional = true, markers = "extra == \"pycryptodome\""}
 
 [package.extras]
@@ -298,17 +289,17 @@ test = ["hypothesis (>=4.43.0,<5.0.0)", "pytest (==5.4.1)", "pytest-xdist", "tox
 
 [[package]]
 name = "hexbytes"
-version = "0.2.1"
+version = "0.2.2"
 description = "hexbytes: Python `bytes` subclass that decodes hex, with a readable console output"
 category = "main"
 optional = false
 python-versions = ">=3.6, <4"
 
 [package.extras]
-dev = ["bumpversion (>=0.5.3,<1)", "pytest-watch (>=4.1.0,<5)", "wheel", "twine", "ipython", "pytest (==5.4.1)", "pytest-xdist", "tox (==3.14.6)", "hypothesis (>=3.44.24,<4)", "eth-utils (>=1.0.1,<2)", "flake8 (==3.7.9)", "isort (>=4.2.15,<5)", "mypy (==0.770)", "pydocstyle (>=3.0.0,<4)", "Sphinx (>=1.6.5,<2)", "sphinx-rtd-theme (>=0.1.9)", "towncrier (>=19.2.0,<20)"]
-doc = ["Sphinx (>=1.6.5,<2)", "sphinx-rtd-theme (>=0.1.9)", "towncrier (>=19.2.0,<20)"]
-lint = ["flake8 (==3.7.9)", "isort (>=4.2.15,<5)", "mypy (==0.770)", "pydocstyle (>=3.0.0,<4)"]
-test = ["pytest (==5.4.1)", "pytest-xdist", "tox (==3.14.6)", "hypothesis (>=3.44.24,<4)", "eth-utils (>=1.0.1,<2)"]
+dev = ["Sphinx (>=1.6.5,<2)", "bumpversion (>=0.5.3,<1)", "eth-utils (>=1.0.1,<2)", "flake8 (==3.7.9)", "hypothesis (>=3.44.24,<4)", "ipython", "isort (>=4.2.15,<5)", "mypy (==0.770)", "pydocstyle (>=5.0.0,<6)", "pytest-watch (>=4.1.0,<5)", "pytest-xdist", "pytest (==5.4.1)", "sphinx-rtd-theme (>=0.1.9,<1)", "towncrier (>=19.2.0,<20)", "tox (==3.14.6)", "twine", "wheel"]
+doc = ["Sphinx (>=1.6.5,<2)", "sphinx-rtd-theme (>=0.1.9,<1)", "towncrier (>=19.2.0,<20)"]
+lint = ["flake8 (==3.7.9)", "isort (>=4.2.15,<5)", "mypy (==0.770)", "pydocstyle (>=5.0.0,<6)"]
+test = ["eth-utils (>=1.0.1,<2)", "hypothesis (>=3.44.24,<4)", "pytest-xdist", "pytest (==5.4.1)", "tox (==3.14.6)"]
 
 [[package]]
 name = "idna"
@@ -320,7 +311,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "importlib-metadata"
-version = "4.6.1"
+version = "4.8.1"
 description = "Read metadata from Python packages"
 category = "main"
 optional = false
@@ -337,11 +328,11 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 
 [[package]]
 name = "ipfshttpclient"
-version = "0.7.0"
+version = "0.8.0a2"
 description = "Python IPFS HTTP CLIENT library"
 category = "main"
 optional = false
-python-versions = ">=3.5.4,!=3.6.0,!=3.6.1,!=3.7.0,!=3.7.1"
+python-versions = ">=3.6.2,!=3.7.0,!=3.7.1"
 
 [package.dependencies]
 multiaddr = ">=0.0.7"
@@ -366,18 +357,17 @@ format = ["idna", "jsonpointer (>1.13)", "rfc3987", "strict-rfc3339", "webcolors
 format_nongpl = ["idna", "jsonpointer (>1.13)", "webcolors", "rfc3986-validator (>0.1.0)", "rfc3339-validator"]
 
 [[package]]
-name = "lido"
-version = "1.1.0"
-description = "Network helpers for Lido"
+name = "lido-sdk"
+version = "2.1.1"
+description = "This library consolidates various functions to efficiently load network data for Lido, validate node operator keys and find key duplicates."
 category = "main"
 optional = false
-python-versions = ">3.7.1,<4"
+python-versions = ">=3.7,<4"
 
 [package.dependencies]
-py-ecc = ">=5.1.0,<6.0.0"
-requests = ">=2.25.1,<3.0.0"
-ssz = ">=0.2.4,<0.3.0"
-web3 = ">=5.15.0,<6.0.0"
+multicall = "0.1.2"
+ssz = "0.2.4"
+web3 = "5.23.1"
 
 [[package]]
 name = "lru-dict"
@@ -402,20 +392,25 @@ six = "*"
 varint = "*"
 
 [[package]]
+name = "multicall"
+version = "0.1.2"
+description = "aggregate results from multiple ethereum contract calls"
+category = "main"
+optional = false
+python-versions = ">=3.7,<4.0"
+
+[package.dependencies]
+eth_abi = ">=2.1.0,<3.0.0"
+eth_utils = ">=1.8.4,<2.0.0"
+web3 = ">=5.4.0,<6.0.0"
+
+[[package]]
 name = "multidict"
 version = "5.1.0"
 description = "multidict implementation"
 category = "main"
 optional = false
 python-versions = ">=3.6"
-
-[[package]]
-name = "mypy-extensions"
-version = "0.4.3"
-description = "Experimental type system extensions for programs checked with the mypy typechecker."
-category = "main"
-optional = false
-python-versions = "*"
 
 [[package]]
 name = "netaddr"
@@ -446,25 +441,6 @@ python-versions = "*"
 
 [package.dependencies]
 six = ">=1.9"
-
-[[package]]
-name = "py-ecc"
-version = "5.2.0"
-description = "Elliptic curve crypto in python including secp256k1 and alt_bn128"
-category = "main"
-optional = false
-python-versions = ">=3.5, <4"
-
-[package.dependencies]
-cached-property = ">=1.5.1,<2"
-eth-typing = ">=2.1.0,<3.0.0"
-eth-utils = ">=1.3.0,<2"
-mypy-extensions = ">=0.4.1"
-
-[package.extras]
-dev = ["bumpversion (>=0.5.3,<1)", "twine", "pytest (==3.10.1)", "pytest-xdist (==1.26.0)", "flake8 (==3.5.0)", "mypy (==0.641)", "mypy-extensions (>=0.4.1)"]
-lint = ["flake8 (==3.5.0)", "mypy (==0.641)", "mypy-extensions (>=0.4.1)"]
-test = ["pytest (==3.10.1)", "pytest-xdist (==1.26.0)"]
 
 [[package]]
 name = "pycryptodome"
@@ -566,7 +542,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "typing-extensions"
-version = "3.10.0.0"
+version = "3.10.0.2"
 description = "Backported and Experimental Type Hints for Python 3.5+"
 category = "main"
 optional = false
@@ -595,7 +571,7 @@ python-versions = "*"
 
 [[package]]
 name = "web3"
-version = "5.21.0"
+version = "5.23.1"
 description = "Web3.py"
 category = "main"
 optional = false
@@ -604,12 +580,12 @@ python-versions = ">=3.6,<4"
 [package.dependencies]
 aiohttp = ">=3.7.4.post0,<4"
 eth-abi = ">=2.0.0b6,<3.0.0"
-eth-account = ">=0.5.3,<0.6.0"
+eth-account = ">=0.5.5,<0.6.0"
 eth-hash = {version = ">=0.2.0,<1.0.0", extras = ["pycryptodome"]}
 eth-typing = ">=2.0.0,<3.0.0"
 eth-utils = ">=1.9.5,<2.0.0"
 hexbytes = ">=0.1.0,<1.0.0"
-ipfshttpclient = "0.7.0"
+ipfshttpclient = "0.8.0a2"
 jsonschema = ">=3.2.0,<4.0.0"
 lru-dict = ">=1.1.6,<2.0.0"
 protobuf = ">=3.10.0,<4"
@@ -619,10 +595,10 @@ typing-extensions = {version = ">=3.7.4.1,<4", markers = "python_version < \"3.8
 websockets = ">=9.1,<10"
 
 [package.extras]
-dev = ["eth-tester[py-evm] (==v0.5.0-beta.4)", "py-geth (>=3.2.0,<4)", "flake8 (==3.8.3)", "isort (>=4.2.15,<4.3.5)", "mypy (==0.812)", "mock", "sphinx-better-theme (>=0.1.4)", "click (>=5.1)", "configparser (==3.5.0)", "contextlib2 (>=0.5.4)", "py-solc (>=0.4.0)", "pytest (>=4.4.0,<5.0.0)", "sphinx (>=3.0,<4)", "sphinx-rtd-theme (>=0.1.9)", "toposort (>=1.4)", "towncrier (>=19.2.0,<20)", "urllib3", "wheel", "bumpversion", "flaky (>=3.7.0,<4)", "hypothesis (>=3.31.2,<6)", "pytest-asyncio (>=0.10.0,<0.11)", "pytest-mock (>=1.10,<2)", "pytest-pythonpath (>=0.3)", "pytest-watch (>=4.2,<5)", "pytest-xdist (>=1.29,<2)", "setuptools (>=38.6.0)", "tox (>=1.8.0)", "tqdm (>4.32,<5)", "twine (>=1.13,<2)", "when-changed (>=0.3.0,<0.4)"]
-docs = ["mock", "sphinx-better-theme (>=0.1.4)", "click (>=5.1)", "configparser (==3.5.0)", "contextlib2 (>=0.5.4)", "py-geth (>=3.2.0,<4)", "py-solc (>=0.4.0)", "pytest (>=4.4.0,<5.0.0)", "sphinx (>=3.0,<4)", "sphinx-rtd-theme (>=0.1.9)", "toposort (>=1.4)", "towncrier (>=19.2.0,<20)", "urllib3", "wheel"]
+dev = ["eth-tester[py-evm] (==v0.5.0-beta.4)", "py-geth (>=3.5.0,<4)", "flake8 (==3.8.3)", "isort (>=4.2.15,<4.3.5)", "mypy (==0.812)", "mock", "sphinx-better-theme (>=0.1.4)", "click (>=5.1)", "configparser (==3.5.0)", "contextlib2 (>=0.5.4)", "py-solc (>=0.4.0)", "pytest (>=4.4.0,<5.0.0)", "sphinx (>=3.0,<4)", "sphinx-rtd-theme (>=0.1.9)", "toposort (>=1.4)", "towncrier (>=19.2.0,<20)", "urllib3", "wheel", "bumpversion", "flaky (>=3.7.0,<4)", "hypothesis (>=3.31.2,<6)", "pytest-asyncio (>=0.10.0,<0.11)", "pytest-mock (>=1.10,<2)", "pytest-pythonpath (>=0.3)", "pytest-watch (>=4.2,<5)", "pytest-xdist (>=1.29,<2)", "setuptools (>=38.6.0)", "tox (>=1.8.0)", "tqdm (>4.32,<5)", "twine (>=1.13,<2)", "pluggy (==0.13.1)", "when-changed (>=0.3.0,<0.4)"]
+docs = ["mock", "sphinx-better-theme (>=0.1.4)", "click (>=5.1)", "configparser (==3.5.0)", "contextlib2 (>=0.5.4)", "py-geth (>=3.5.0,<4)", "py-solc (>=0.4.0)", "pytest (>=4.4.0,<5.0.0)", "sphinx (>=3.0,<4)", "sphinx-rtd-theme (>=0.1.9)", "toposort (>=1.4)", "towncrier (>=19.2.0,<20)", "urllib3", "wheel"]
 linter = ["flake8 (==3.8.3)", "isort (>=4.2.15,<4.3.5)", "mypy (==0.812)"]
-tester = ["eth-tester[py-evm] (==v0.5.0-beta.4)", "py-geth (>=3.2.0,<4)"]
+tester = ["eth-tester[py-evm] (==v0.5.0-beta.4)", "py-geth (>=3.5.0,<4)"]
 
 [[package]]
 name = "websockets"
@@ -660,7 +636,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = ">3.7.1,<4"
-content-hash = "7804844d91d35dd58ec04b2e002ba07406a2aa342544386e93347729fbf7342b"
+content-hash = "83abf2f68a64c8c65892bb515386c599ee2802174084c9271b94f808c5a70b6e"
 
 [metadata.files]
 aiohttp = [
@@ -725,10 +701,6 @@ bumpversion = [
     {file = "bumpversion-0.6.0-py2.py3-none-any.whl", hash = "sha256:4eb3267a38194d09f048a2179980bb4803701969bff2c85fa8f6d1ce050be15e"},
     {file = "bumpversion-0.6.0.tar.gz", hash = "sha256:4ba55e4080d373f80177b4dabef146c07ce73c7d1377aabf9d3c3ae1f94584a6"},
 ]
-cached-property = [
-    {file = "cached-property-1.5.2.tar.gz", hash = "sha256:9fa5755838eecbb2d234c3aa390bd80fbd3ac6b6869109bfc1b499f7bd89a130"},
-    {file = "cached_property-1.5.2-py2.py3-none-any.whl", hash = "sha256:df4f613cf7ad9a588cc381aaf4a512d26265ecebd5eb9e1ba12f1319eb85a6a0"},
-]
 certifi = [
     {file = "certifi-2021.5.30-py2.py3-none-any.whl", hash = "sha256:50b1e4f8446b06f41be7dd6338db18e0990601dce795c2b1686458aa7e8fa7d8"},
     {file = "certifi-2021.5.30.tar.gz", hash = "sha256:2bbf76fd432960138b3ef6dda3dde0544f27cbf8546c458e60baf371917ba9ee"},
@@ -738,8 +710,8 @@ chardet = [
     {file = "chardet-4.0.0.tar.gz", hash = "sha256:0d6f53a15db4120f2b08c94f11e7d93d2c911ee118b6b30a04ec3ee8310179fa"},
 ]
 charset-normalizer = [
-    {file = "charset-normalizer-2.0.1.tar.gz", hash = "sha256:ad0da505736fc7e716a8da15bf19a985db21ac6415c26b34d2fafd3beb3d927e"},
-    {file = "charset_normalizer-2.0.1-py3-none-any.whl", hash = "sha256:b68b38179052975093d71c1b5361bf64afd80484697c1f27056e50593e695ceb"},
+    {file = "charset-normalizer-2.0.4.tar.gz", hash = "sha256:f23667ebe1084be45f6ae0538e4a5a865206544097e4e8bbcacf42cd02a348f3"},
+    {file = "charset_normalizer-2.0.4-py3-none-any.whl", hash = "sha256:0c8911edd15d19223366a194a513099a302055a962bca2cec0f54b8b63175d8b"},
 ]
 click = [
     {file = "click-8.0.1-py3-none-any.whl", hash = "sha256:fba402a4a47334742d782209a7c79bc448911afe1149d07bdabdf480b3e2f4b6"},
@@ -750,6 +722,26 @@ colorama = [
     {file = "colorama-0.4.4.tar.gz", hash = "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"},
 ]
 cytoolz = [
+    {file = "cytoolz-0.11.0-cp35-cp35m-macosx_10_6_x86_64.whl", hash = "sha256:c50051c02b23823209d6b0e8f7b2b37371312da50ca78165871dc6fed7bd37df"},
+    {file = "cytoolz-0.11.0-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:140eaadcd86216d4a185db3a37396ee80dd2edc6e490ba37a3d7c1b17a124078"},
+    {file = "cytoolz-0.11.0-cp35-cp35m-manylinux2010_x86_64.whl", hash = "sha256:c183237f4f0bac53238588e3567c0287130dd9ed6b6b880579a5cca960a89f54"},
+    {file = "cytoolz-0.11.0-cp35-cp35m-manylinux2014_x86_64.whl", hash = "sha256:6cba0572e3ad187e0ea0ddd20bb9c6aad794c23d997ed2b2aa2bbd109fe61f9f"},
+    {file = "cytoolz-0.11.0-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:c7ed490f7f5c069a5082b73803ff4595f12ed0eb6b52ffa5ffe15d532acb71ed"},
+    {file = "cytoolz-0.11.0-cp36-cp36m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:e2e7cbfec2681e8acfd0013e9581905f251455d411457a6f475ba1870d1685fc"},
+    {file = "cytoolz-0.11.0-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:596a40ce920dd6cdab42d3dec5a4e8bb0bf258bb79426a4ed7658a27c214941b"},
+    {file = "cytoolz-0.11.0-cp36-cp36m-win_amd64.whl", hash = "sha256:477f71b8b2c6fdd97aa3a421ba0cfd04b22ffed1b22dda3fea06db2756ee7097"},
+    {file = "cytoolz-0.11.0-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:5692a100d657f9bc2fede44ff41649c0c577f251bc0bd06c699c177235a0f81c"},
+    {file = "cytoolz-0.11.0-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:8893b54f8d8d1bbc5a22dc4989d9b3eb269dd5ee1247993158e1f9ae0fbb9c88"},
+    {file = "cytoolz-0.11.0-cp37-cp37m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:84519cf4f63308b0ce39162b7a341367338953cd9fbf7edd335cbc44dcd321e9"},
+    {file = "cytoolz-0.11.0-cp37-cp37m-win_amd64.whl", hash = "sha256:2f9963114029e78ddb626140cbb15b79ad0fd1563484b73fb29403a3d5bf3ed4"},
+    {file = "cytoolz-0.11.0-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:c65635ad93bac9002e36d42603bd87514e8ea932910158054b409ceee05ff4fe"},
+    {file = "cytoolz-0.11.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:a6e95de2fe891075f71edb0a56701eeaae04d43f44470c24d45e89f1ea801e85"},
+    {file = "cytoolz-0.11.0-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:b4a3eb96eda360b14fa6c7d2ce6faf684319c051f9ea620b009cb28a2878ed32"},
+    {file = "cytoolz-0.11.0-cp38-cp38-win_amd64.whl", hash = "sha256:d0fdf0186201f882274db95fc5644ef34bfb0593d9db23b7343b0e6c8c000a0a"},
+    {file = "cytoolz-0.11.0-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:f85a8e164ebbe75e77a9c8a0b91bd2a3ceb5beeb0f1c180affe75318a41df98c"},
+    {file = "cytoolz-0.11.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:fb1b6bb4dee54fe62306d7330639f57a0dbb612520516b97b1c9dea5bc506634"},
+    {file = "cytoolz-0.11.0-cp39-cp39-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:3159da30eaf214746215293fdba19b6b54af59b3b2ba979eb9e184c6c7a854d2"},
+    {file = "cytoolz-0.11.0-cp39-cp39-win_amd64.whl", hash = "sha256:b61f23e9fa7cd5a87a503ab659f816858e2235926cd95b0c7e37403530d4a2d6"},
     {file = "cytoolz-0.11.0.tar.gz", hash = "sha256:c64f3590c3eb40e1548f0d3c6b2ccde70493d0b8dc6cc7f9f3fec0bb3dcd4222"},
 ]
 eth-abi = [
@@ -757,12 +749,12 @@ eth-abi = [
     {file = "eth_abi-2.1.1.tar.gz", hash = "sha256:4bb1d87bb6605823379b07f6c02c8af45df01a27cc85bd6abb7cf1446ce7d188"},
 ]
 eth-account = [
-    {file = "eth-account-0.5.4.tar.gz", hash = "sha256:0c63d4955acb16a46ec50b2cfb84386e9b029868a68430a918775415560aef57"},
-    {file = "eth_account-0.5.4-py3-none-any.whl", hash = "sha256:c1f6ad81c04858996ca2bd8ee362cb5faab846c20afafd961acd1eac73b40331"},
+    {file = "eth-account-0.5.5.tar.gz", hash = "sha256:60396fedde2546bb23d3b1a4f28a959387738c9906090d2fdd01b9e663eaa829"},
+    {file = "eth_account-0.5.5-py3-none-any.whl", hash = "sha256:e579a898a976ad3436e328036a0ac4bb36573561dd0773f717dba6a72c137a2c"},
 ]
 eth-hash = [
-    {file = "eth-hash-0.3.1.tar.gz", hash = "sha256:aee46d9c43b98ac6d4ddf957cf75d4d0a5174ee814cc6b53dd6134dcedb459bf"},
-    {file = "eth_hash-0.3.1-py3-none-any.whl", hash = "sha256:a3bc7f1c12eb086525999de7f83b9e7ad39740b31f0f4eccb17377ed70de24dd"},
+    {file = "eth-hash-0.3.2.tar.gz", hash = "sha256:3f40cecd5ead88184aa9550afc19d057f103728108c5102f592f8415949b5a76"},
+    {file = "eth_hash-0.3.2-py3-none-any.whl", hash = "sha256:de7385148a8e0237ba1240cddbc06d53f56731140f8593bdb8429306f6b42271"},
 ]
 eth-keyfile = [
     {file = "eth-keyfile-0.5.1.tar.gz", hash = "sha256:939540efb503380bc30d926833e6a12b22c6750de80feef3720d79e5a79de47d"},
@@ -785,28 +777,33 @@ eth-utils = [
     {file = "eth_utils-1.10.0-py3-none-any.whl", hash = "sha256:74240a8c6f652d085ed3c85f5f1654203d2f10ff9062f83b3bad0a12ff321c7a"},
 ]
 hexbytes = [
-    {file = "hexbytes-0.2.1-py3-none-any.whl", hash = "sha256:a093a5533aa63ca6614246fa97feb693b5813f9e736c38b68fe4e2d8fcc35aa5"},
-    {file = "hexbytes-0.2.1.tar.gz", hash = "sha256:123fcf397f52fc7eb34f43ca9a7930a6acfebcabe8ffaef6c7d3520c2356345a"},
+    {file = "hexbytes-0.2.2-py3-none-any.whl", hash = "sha256:ef53c37ea9f316fff86fcb1df057b4c6ba454da348083e972031bbf7bc9c3acc"},
+    {file = "hexbytes-0.2.2.tar.gz", hash = "sha256:a5881304d186e87578fb263a85317c808cf130e1d4b3d37d30142ab0f7898d03"},
 ]
 idna = [
     {file = "idna-3.2-py3-none-any.whl", hash = "sha256:14475042e284991034cb48e06f6851428fb14c4dc953acd9be9a5e95c7b6dd7a"},
     {file = "idna-3.2.tar.gz", hash = "sha256:467fbad99067910785144ce333826c71fb0e63a425657295239737f7ecd125f3"},
 ]
 importlib-metadata = [
-    {file = "importlib_metadata-4.6.1-py3-none-any.whl", hash = "sha256:9f55f560e116f8643ecf2922d9cd3e1c7e8d52e683178fecd9d08f6aa357e11e"},
-    {file = "importlib_metadata-4.6.1.tar.gz", hash = "sha256:079ada16b7fc30dfbb5d13399a5113110dab1aa7c2bc62f66af75f0b717c8cac"},
+    {file = "importlib_metadata-4.8.1-py3-none-any.whl", hash = "sha256:b618b6d2d5ffa2f16add5697cf57a46c76a56229b0ed1c438322e4e95645bd15"},
+    {file = "importlib_metadata-4.8.1.tar.gz", hash = "sha256:f284b3e11256ad1e5d03ab86bb2ccd6f5339688ff17a4d797a0fe7df326f23b1"},
 ]
 ipfshttpclient = [
-    {file = "ipfshttpclient-0.7.0-py3-none-any.whl", hash = "sha256:161c348e91cdc194c06c8725446a51a2d758ff2cc5ea97ec98f49e2af2465405"},
-    {file = "ipfshttpclient-0.7.0.tar.gz", hash = "sha256:feb1033c14c3ac87ee81264176c5beefeaf386385804427160466117ccc43693"},
+    {file = "ipfshttpclient-0.8.0a2-py3-none-any.whl", hash = "sha256:ce6bac0e3963c4ced74d7eb6978125362bb05bbe219088ca48f369ce14d3cc39"},
+    {file = "ipfshttpclient-0.8.0a2.tar.gz", hash = "sha256:0d80e95ee60b02c7d414e79bf81a36fc3c8fbab74265475c52f70b2620812135"},
 ]
 jsonschema = [
     {file = "jsonschema-3.2.0-py2.py3-none-any.whl", hash = "sha256:4e5b3cf8216f577bee9ce139cbe72eca3ea4f292ec60928ff24758ce626cd163"},
     {file = "jsonschema-3.2.0.tar.gz", hash = "sha256:c8a85b28d377cc7737e46e2d9f2b4f44ee3c0e1deac6bf46ddefc7187d30797a"},
 ]
-lido = [
-    {file = "lido-1.1.0-py3-none-any.whl", hash = "sha256:c54f9f09f5292cc167676f384e8c1f9950ea76354f0b79fa3f618997db8ef44c"},
-    {file = "lido-1.1.0.tar.gz", hash = "sha256:83ca3b654b793403e55b8098a9e7b67cd19129b9b5e799d70f1fa3340fcd1123"},
+lido-sdk = [
+    {file = "lido-sdk-2.1.1.tar.gz", hash = "sha256:6a0c473df475a4e20d8fa91480d54e1b01c02566d14ef7ba165807cf2910ebb5"},
+    {file = "lido_sdk-2.1.1-cp37-cp37m-macosx_10_14_x86_64.whl", hash = "sha256:bf23fd3ea87fa6991b357cd2b126943886927acd533b6fae46f759cc9accf9b5"},
+    {file = "lido_sdk-2.1.1-cp37-cp37m-win_amd64.whl", hash = "sha256:0ba046e6602f87ab21c70cb8b14fc8de0c69682b43dbb458673ba328d194e705"},
+    {file = "lido_sdk-2.1.1-cp38-cp38-macosx_10_14_x86_64.whl", hash = "sha256:c14dceed279c3f6c56809c94e713583d66e37de0de783db8ef4f58c19fdb05a7"},
+    {file = "lido_sdk-2.1.1-cp38-cp38-win_amd64.whl", hash = "sha256:8e109c692a087cfdb28c05aa19e8fc09aa53bc4cd47c68299f7893f87cdc03d6"},
+    {file = "lido_sdk-2.1.1-cp39-cp39-macosx_10_14_x86_64.whl", hash = "sha256:84c043d591c66899d4b38810ba4475def274b24e8210b9cd749003c10c53d7a9"},
+    {file = "lido_sdk-2.1.1-cp39-cp39-win_amd64.whl", hash = "sha256:95d18a8514c4f6bd5da428fc2c2a0a4a94552bbe01fa751b56a8a0ccf36e29ae"},
 ]
 lru-dict = [
     {file = "lru-dict-1.1.7.tar.gz", hash = "sha256:45b81f67d75341d4433abade799a47e9c42a9e22a118531dcb5e549864032d7c"},
@@ -814,6 +811,10 @@ lru-dict = [
 multiaddr = [
     {file = "multiaddr-0.0.9-py2.py3-none-any.whl", hash = "sha256:5c0f862cbcf19aada2a899f80ef896ddb2e85614e0c8f04dd287c06c69dac95b"},
     {file = "multiaddr-0.0.9.tar.gz", hash = "sha256:30b2695189edc3d5b90f1c303abb8f02d963a3a4edf2e7178b975eb417ab0ecf"},
+]
+multicall = [
+    {file = "multicall-0.1.2-py3-none-any.whl", hash = "sha256:1fef15f9a64ffe0edd57cda08c5fd6eb60109ebb62f9483d2f6582dd73427f3f"},
+    {file = "multicall-0.1.2.tar.gz", hash = "sha256:bdc7ff1b60b9b4d6c0312559d2f0396a92469f8cddf86531201e0f6fe79b8374"},
 ]
 multidict = [
     {file = "multidict-5.1.0-cp36-cp36m-macosx_10_14_x86_64.whl", hash = "sha256:b7993704f1a4b204e71debe6095150d43b2ee6150fa4f44d6d966ec356a8d61f"},
@@ -854,10 +855,6 @@ multidict = [
     {file = "multidict-5.1.0-cp39-cp39-win_amd64.whl", hash = "sha256:7df80d07818b385f3129180369079bd6934cf70469f99daaebfac89dca288359"},
     {file = "multidict-5.1.0.tar.gz", hash = "sha256:25b4e5f22d3a37ddf3effc0710ba692cfc792c2b9edfb9c05aefe823256e84d5"},
 ]
-mypy-extensions = [
-    {file = "mypy_extensions-0.4.3-py2.py3-none-any.whl", hash = "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d"},
-    {file = "mypy_extensions-0.4.3.tar.gz", hash = "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"},
-]
 netaddr = [
     {file = "netaddr-0.8.0-py2.py3-none-any.whl", hash = "sha256:9666d0232c32d2656e5e5f8d735f58fd6c7457ce52fc21c98d45f2af78f990ac"},
     {file = "netaddr-0.8.0.tar.gz", hash = "sha256:d6cc57c7a07b1d9d2e917aa8b36ae8ce61c35ba3fcd1b83ca31c5a0ee2b5a243"},
@@ -893,10 +890,6 @@ protobuf = [
     {file = "protobuf-3.17.3-cp39-cp39-win_amd64.whl", hash = "sha256:85d6303e4adade2827e43c2b54114d9a6ea547b671cb63fafd5011dc47d0e13d"},
     {file = "protobuf-3.17.3-py2.py3-none-any.whl", hash = "sha256:2bfb815216a9cd9faec52b16fd2bfa68437a44b67c56bee59bc3926522ecb04e"},
     {file = "protobuf-3.17.3.tar.gz", hash = "sha256:72804ea5eaa9c22a090d2803813e280fb273b62d5ae497aaf3553d141c4fdd7b"},
-]
-py-ecc = [
-    {file = "py_ecc-5.2.0-py3-none-any.whl", hash = "sha256:525b95aae5bbc185baff7dbfdb9bbd14d2c9454a797457f3edc85fd14c2ad7a6"},
-    {file = "py_ecc-5.2.0.tar.gz", hash = "sha256:f0aabdc82813ecb2e75e0531e3850295ff1a96bedfba42f15b5bc7f39ced64ba"},
 ]
 pycryptodome = [
     {file = "pycryptodome-3.10.1-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:1c5e1ca507de2ad93474be5cfe2bfa76b7cf039a1a32fc196f40935944871a06"},
@@ -966,9 +959,9 @@ toolz = [
     {file = "toolz-0.11.1.tar.gz", hash = "sha256:c7a47921f07822fe534fb1c01c9931ab335a4390c782bd28c6bcc7c2f71f3fbf"},
 ]
 typing-extensions = [
-    {file = "typing_extensions-3.10.0.0-py2-none-any.whl", hash = "sha256:0ac0f89795dd19de6b97debb0c6af1c70987fd80a2d62d1958f7e56fcc31b497"},
-    {file = "typing_extensions-3.10.0.0-py3-none-any.whl", hash = "sha256:779383f6086d90c99ae41cf0ff39aac8a7937a9283ce0a414e5dd782f4c94a84"},
-    {file = "typing_extensions-3.10.0.0.tar.gz", hash = "sha256:50b6f157849174217d0656f99dc82fe932884fb250826c18350e159ec6cdf342"},
+    {file = "typing_extensions-3.10.0.2-py2-none-any.whl", hash = "sha256:d8226d10bc02a29bcc81df19a26e56a9647f8b0a6d4a83924139f4a8b01f17b7"},
+    {file = "typing_extensions-3.10.0.2-py3-none-any.whl", hash = "sha256:f1d25edafde516b146ecd0613dabcc61409817af4766fbbcfb8d1ad4ec441a34"},
+    {file = "typing_extensions-3.10.0.2.tar.gz", hash = "sha256:49f75d16ff11f1cd258e1b988ccff82a3ca5570217d7ad8c5f48205dd99a677e"},
 ]
 urllib3 = [
     {file = "urllib3-1.26.6-py2.py3-none-any.whl", hash = "sha256:39fb8672126159acb139a7718dd10806104dec1e2f0f6c88aab05d17df10c8d4"},
@@ -978,8 +971,8 @@ varint = [
     {file = "varint-1.0.2.tar.gz", hash = "sha256:a6ecc02377ac5ee9d65a6a8ad45c9ff1dac8ccee19400a5950fb51d594214ca5"},
 ]
 web3 = [
-    {file = "web3-5.21.0-py3-none-any.whl", hash = "sha256:c8dd26e5ffc11f6003dfceebde8e3ef8b4e3c97c4c2ccc809b8adab21f4c22f6"},
-    {file = "web3-5.21.0.tar.gz", hash = "sha256:b7ac161332ce4a96434be2f54a8729a1b4405e592a151cacaa48b227ef29b5b2"},
+    {file = "web3-5.23.1-py3-none-any.whl", hash = "sha256:6e561fd5fdbcf9571b1de8b77b2d81997f77a691e32ad536d489a0732f1cf182"},
+    {file = "web3-5.23.1.tar.gz", hash = "sha256:e3bc899201c38859ae65b1905105628f70a0c1684a6fb76fa4dd5b1db4fc40b0"},
 ]
 websockets = [
     {file = "websockets-9.1-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:d144b350045c53c8ff09aa1cfa955012dd32f00c7e0862c199edcabb1a8b32da"},
