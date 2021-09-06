@@ -1,0 +1,42 @@
+name: validate_network_keys
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        python-version: [ 3.9 ]
+        architecture: [ x64 ]
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+        architecture: ${{ matrix.architecture }}
+
+    - name: Create virtualenv
+      run: |
+        pip install virtualenv
+        virtualenv .env
+        source .env/bin/activate
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install poetry
+        poetry install
+
+    - name: Network keys validation
+      run: |
+        python3 lido_validate_keys.py --rpc ${{ secrets.RPC_ENDPOINT }} validate_network_keys
