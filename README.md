@@ -1,4 +1,4 @@
-# Node Operator Key Checker CLI
+# <img src="https://docs.lido.fi/img/logo.svg" alt="Lido" width="46"/> Node Operator Key Checker CLI
 
 ## Installation
 
