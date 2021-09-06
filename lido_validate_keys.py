@@ -1,13 +1,11 @@
 import json
-from typing import List
+from time import time
 
 import click
 import lido_sdk.config
 
 from web3 import Web3
 from lido_sdk import Lido
-
-from helpers import pick_by, count_by
 
 
 @click.group()
@@ -61,11 +59,16 @@ def cli(ctx, rpc, multicall_max_bunch, multicall_max_workers, multicall_max_retr
 @click.pass_context
 def validate_network_keys(ctx):
     """Checking node operator keys from network."""
+
+    t1 = time()
+
     lido: Lido = ctx.obj["lido"]
     _load_base_data(lido)
     _validate_keys(lido)
     _find_duplicated_keys(lido)
-    click.secho("Finished", fg="green")
+
+    total_time = time() - t1
+    click.secho(f"Finished in {round(total_time, 2)} seconds.")
 
 
 @click.option(
@@ -78,6 +81,8 @@ def validate_network_keys(ctx):
 @click.pass_context
 def validate_file_keys(ctx, file):
     """Checking node operator keys from input file."""
+
+    t1 = time()
 
     # Loading variables from context
     lido = ctx.obj["lido"]
@@ -97,7 +102,8 @@ def validate_file_keys(ctx, file):
     _validate_keys(lido, keys, strict=True)
     _find_duplicated_keys(lido, keys)
 
-    click.secho("Finished.")
+    total_time = time() - t1
+    click.secho(f"Finished in {round(total_time, 2)} seconds.")
 
 
 def _load_base_data(lido):
@@ -122,7 +128,10 @@ def _validate_keys(lido, keys=None, strict=False):
     if invalid_keys:
         click.secho("Invalid keys found:", fg="red")
         for key in invalid_keys:
-            operator = next(operator for operator in lido.operators if operator["index"] == key["operator_index"])
+            try:
+                operator = next(operator for operator in lido.operators if operator["index"] == key.get("operator_index", None))
+            except StopIteration:
+                operator = None
 
             _print_key(key, operator)
     else:
@@ -142,10 +151,18 @@ def _find_duplicated_keys(lido, keys=None):
         click.secho("Duplicated keys found:", fg="red")
         for dk in duplicated_keys:
             click.secho("Pair:", fg="red")
-            operator = next(operator for operator in lido.operators if operator["index"] == dk[0]["operator_index"])
+
+            try:
+                operator = next(operator for operator in lido.operators if operator["index"] == dk[0].get("operator_index", None))
+            except StopIteration:
+                operator = None
             _print_key(dk[0], operator)
 
-            operator = next(operator for operator in lido.operators if operator["index"] == dk[1]["operator_index"])
+            try:
+                operator = next(operator for operator in lido.operators if operator["index"] == dk[1].get("operator_index", None))
+            except StopIteration:
+                operator = None
+
             _print_key(dk[1], operator)
     else:
         click.secho("No duplicated keys found", fg="red")
@@ -154,10 +171,10 @@ def _find_duplicated_keys(lido, keys=None):
 
 def _print_key(key, operator=None):
     if operator is None:
-        click.secho(f"Key: ${key['key']}", fg="red")
+        click.secho(f"Key: [{key['key'].hex()}].", fg="red")
     else:
         key_used = 'USED' if key['used'] else 'NOT USED'
-        click.secho(f"${operator['name']} (${operator['index']}) key ${key['index']} ${key_used} - OP Active: ${operator['stakingLimit']} Key used: ${operator['usedSigningKeys']}.", fg="red")
+        click.secho(f"Key: [{key['key'].hex()}]. Operator: [{operator['name']}] (index: [{operator['index']}]) key index: [{key['index']}]. Key [{key_used}] - OP Active: Stacking Limit: [{operator['stakingLimit']}]. Key count used: [{operator['usedSigningKeys']}].", fg="red")
 
 
 if __name__ == "__main__":
