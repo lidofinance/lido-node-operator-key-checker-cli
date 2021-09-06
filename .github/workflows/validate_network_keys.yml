@@ -16,20 +16,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with:
-        submodules: true
 
     - name: Setup Python
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
         architecture: ${{ matrix.architecture }}
-
-    - name: Create virtualenv
-      run: |
-        pip install virtualenv
-        virtualenv .env
-        source .env/bin/activate
 
     - name: Install dependencies
       run: |
