@@ -128,11 +128,7 @@ def _validate_keys(lido, keys=None, strict=False):
     if invalid_keys:
         click.secho("Invalid keys found:", fg="red")
         for key in invalid_keys:
-            try:
-                operator = next(operator for operator in lido.operators if operator["index"] == key.get("operator_index", None))
-            except StopIteration:
-                operator = None
-
+            operator = next((op for op in lido.operators if op["index"] == key.get("operator_index", None)), None)
             _print_key(key, operator)
     else:
         click.secho("No invalid keys found.", fg="red")
@@ -152,17 +148,10 @@ def _find_duplicated_keys(lido, keys=None):
         for dk in duplicated_keys:
             click.secho("Pair:", fg="red")
 
-            try:
-                operator = next(operator for operator in lido.operators if operator["index"] == dk[0].get("operator_index", None))
-            except StopIteration:
-                operator = None
+            operator = next((op for op in lido.operators if op["index"] == dk[0].get("operator_index", None)), None)
             _print_key(dk[0], operator)
 
-            try:
-                operator = next(operator for operator in lido.operators if operator["index"] == dk[1].get("operator_index", None))
-            except StopIteration:
-                operator = None
-
+            operator = next((op for op in lido.operators if op["index"] == dk[1].get("operator_index", None)), None)
             _print_key(dk[1], operator)
     else:
         click.secho("No duplicated keys found", fg="red")
@@ -174,7 +163,13 @@ def _print_key(key, operator=None):
         click.secho(f"Key: [{key['key'].hex()}].", fg="red")
     else:
         key_used = 'USED' if key['used'] else 'NOT USED'
-        click.secho(f"Key: [{key['key'].hex()}]. Operator: [{operator['name']}] (index: [{operator['index']}]) key index: [{key['index']}]. Key [{key_used}] - OP Active: Stacking Limit: [{operator['stakingLimit']}]. Key count used: [{operator['usedSigningKeys']}].", fg="red")
+        click.secho(
+            f"Key: [{key['key'].hex()}]. "
+            f"Operator: [{operator['name']}] (index: [{operator['index']}]) key index: [{key['index']}]. "
+            f"Key [{key_used}] - OP Active: Stacking Limit: [{operator['stakingLimit']}]. "
+            f"Key count used: [{operator['usedSigningKeys']}].",
+            fg="red",
+        )
 
 
 if __name__ == "__main__":
