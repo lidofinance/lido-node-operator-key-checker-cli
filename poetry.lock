@@ -358,7 +358,7 @@ format_nongpl = ["idna", "jsonpointer (>1.13)", "webcolors", "rfc3986-validator 
 
 [[package]]
 name = "lido-sdk"
-version = "2.1.1"
+version = "2.1.2"
 description = "This library consolidates various functions to efficiently load network data for Lido, validate node operator keys and find key duplicates."
 category = "main"
 optional = false
@@ -636,7 +636,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = ">3.7.1,<4"
-content-hash = "83abf2f68a64c8c65892bb515386c599ee2802174084c9271b94f808c5a70b6e"
+content-hash = "e25f0556d006c937626589e06c67983951611a2686e391c8c4c1e0b9ee29e4e5"
 
 [metadata.files]
 aiohttp = [
@@ -797,13 +797,13 @@ jsonschema = [
     {file = "jsonschema-3.2.0.tar.gz", hash = "sha256:c8a85b28d377cc7737e46e2d9f2b4f44ee3c0e1deac6bf46ddefc7187d30797a"},
 ]
 lido-sdk = [
-    {file = "lido-sdk-2.1.1.tar.gz", hash = "sha256:6a0c473df475a4e20d8fa91480d54e1b01c02566d14ef7ba165807cf2910ebb5"},
-    {file = "lido_sdk-2.1.1-cp37-cp37m-macosx_10_14_x86_64.whl", hash = "sha256:bf23fd3ea87fa6991b357cd2b126943886927acd533b6fae46f759cc9accf9b5"},
-    {file = "lido_sdk-2.1.1-cp37-cp37m-win_amd64.whl", hash = "sha256:0ba046e6602f87ab21c70cb8b14fc8de0c69682b43dbb458673ba328d194e705"},
-    {file = "lido_sdk-2.1.1-cp38-cp38-macosx_10_14_x86_64.whl", hash = "sha256:c14dceed279c3f6c56809c94e713583d66e37de0de783db8ef4f58c19fdb05a7"},
-    {file = "lido_sdk-2.1.1-cp38-cp38-win_amd64.whl", hash = "sha256:8e109c692a087cfdb28c05aa19e8fc09aa53bc4cd47c68299f7893f87cdc03d6"},
-    {file = "lido_sdk-2.1.1-cp39-cp39-macosx_10_14_x86_64.whl", hash = "sha256:84c043d591c66899d4b38810ba4475def274b24e8210b9cd749003c10c53d7a9"},
-    {file = "lido_sdk-2.1.1-cp39-cp39-win_amd64.whl", hash = "sha256:95d18a8514c4f6bd5da428fc2c2a0a4a94552bbe01fa751b56a8a0ccf36e29ae"},
+    {file = "lido-sdk-2.1.2.tar.gz", hash = "sha256:65711ff10e4cb59209b4f2222dd8d18151658c645677adf45d9dc442d51ac01b"},
+    {file = "lido_sdk-2.1.2-cp37-cp37m-macosx_10_14_x86_64.whl", hash = "sha256:1ba765696661de545021f9b38b08c0234a719ed847025ee637d42ee811b855ae"},
+    {file = "lido_sdk-2.1.2-cp37-cp37m-win_amd64.whl", hash = "sha256:8ebaddcff41a6847825e9b74c89b50976260d07d7aa4c6101ffca3a2ec450557"},
+    {file = "lido_sdk-2.1.2-cp38-cp38-macosx_10_14_x86_64.whl", hash = "sha256:af3cd3ca1d351ef27274058a074db01f22aabbe87742b8d33fc7516ff78362a0"},
+    {file = "lido_sdk-2.1.2-cp38-cp38-win_amd64.whl", hash = "sha256:7fa53fe47d1858448eee9d9d1884bd6f31423736207d5fc7c14bfe1c29140532"},
+    {file = "lido_sdk-2.1.2-cp39-cp39-macosx_10_14_x86_64.whl", hash = "sha256:5b2da34a6cb4fad0a34950d77cbfe218b1466527fe67883db8018460a902adf0"},
+    {file = "lido_sdk-2.1.2-cp39-cp39-win_amd64.whl", hash = "sha256:ed5c289a974944b873c84274e8a2436461aa93a77152e615f3ab04bcc3caa79f"},
 ]
 lru-dict = [
     {file = "lru-dict-1.1.7.tar.gz", hash = "sha256:45b81f67d75341d4433abade799a47e9c42a9e22a118531dcb5e549864032d7c"},
