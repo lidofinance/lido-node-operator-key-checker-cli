@@ -30,7 +30,7 @@ lido-cli --rpc https://mainnet.provider.io/v3/XXX validate_network_keys
 
 ### Optional Parameters
 
-By default CLI will use embedded strings and ABIs, but you can specify your own arguments if needed. Make sure to use them on CLI itself and not on the command eg:
+By default, CLI will use embedded strings and ABIs, but you can specify your own arguments if needed. Make sure to use them on CLI itself and not on the command eg:
 
 ```
 lido-cli --rpc https://mainnet.provider.io/v3/XXX --multicall_max_bunch 100 --multicall_max_workers 3 --multicall_max_retries 5 validate_network_keys
@@ -41,6 +41,7 @@ lido-cli --rpc https://mainnet.provider.io/v3/XXX --multicall_max_bunch 100 --mu
 --multicall_max_bunch               Max bunch amount of Calls in one Multicall (max recommended 300).
 --multicall_max_workers             Max parallel calls for multicalls.
 --multicall_max_retries             Max call retries.
+-d --details                        More logs about node operators and keys. (only for validate_network_keys)
 ```
 
 ### Checking Network Keys
