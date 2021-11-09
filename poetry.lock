@@ -358,16 +358,16 @@ format_nongpl = ["idna", "jsonpointer (>1.13)", "webcolors", "rfc3986-validator 
 
 [[package]]
 name = "lido-sdk"
-version = "2.2.1"
+version = "2.4.1"
 description = "This library consolidates various functions to efficiently load network data for Lido, validate node operator keys and find key duplicates."
 category = "main"
 optional = false
 python-versions = ">=3.7,<4"
 
 [package.dependencies]
-multicall = "0.1.2"
-ssz = "0.2.4"
-web3 = "5.23.1"
+multicall = ">=0.1.3,<0.2.0"
+ssz = ">=0.2.4,<0.3.0"
+web3 = ">=5.23.1,<6.0.0"
 
 [[package]]
 name = "lru-dict"
@@ -393,7 +393,7 @@ varint = "*"
 
 [[package]]
 name = "multicall"
-version = "0.1.2"
+version = "0.1.3"
 description = "aggregate results from multiple ethereum contract calls"
 category = "main"
 optional = false
@@ -633,7 +633,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = ">3.7.1,<4"
-content-hash = "20b2acbc5b9f9482594308a5d115c0a00501e5d8eeb5c6133d3b9fa54890bd42"
+content-hash = "7a55f493a97fcc8ea89c13230e991f20277edda1e441b601dc65565fd5166e6d"
 
 [metadata.files]
 aiohttp = [
@@ -794,13 +794,13 @@ jsonschema = [
     {file = "jsonschema-3.2.0.tar.gz", hash = "sha256:c8a85b28d377cc7737e46e2d9f2b4f44ee3c0e1deac6bf46ddefc7187d30797a"},
 ]
 lido-sdk = [
-    {file = "lido-sdk-2.2.1.tar.gz", hash = "sha256:11fa1b9c0d90ea2a09fdbb66ee9ba618ea40cdd949217c9e7ca0b96d18542cd5"},
-    {file = "lido_sdk-2.2.1-cp37-cp37m-macosx_10_14_x86_64.whl", hash = "sha256:9302d44a7ba49ca11210e1ba5612486f667f88073331ef1d345a396565c14065"},
-    {file = "lido_sdk-2.2.1-cp37-cp37m-win_amd64.whl", hash = "sha256:c8c925344346a46038f7a097b3cb80446bb8e4f57889a84fdeb4e0400ad8f780"},
-    {file = "lido_sdk-2.2.1-cp38-cp38-macosx_10_14_x86_64.whl", hash = "sha256:5cccad4892224d21dee613f634d0d38d533b66849520516914b8daccb942acf3"},
-    {file = "lido_sdk-2.2.1-cp38-cp38-win_amd64.whl", hash = "sha256:cfeb4830fa8f81b943a183179f0b1d6cbbadb4d434a4032a25312e636a1c0958"},
-    {file = "lido_sdk-2.2.1-cp39-cp39-macosx_10_14_x86_64.whl", hash = "sha256:ab6e7ac442de895795612f46aa2a469550d77bb061ef056d419cff2b1b27208f"},
-    {file = "lido_sdk-2.2.1-cp39-cp39-win_amd64.whl", hash = "sha256:a31e6cb980e28ceeb8e572e60e7b756c13622525957c7910b8737f102c0884ca"},
+    {file = "lido-sdk-2.4.1.tar.gz", hash = "sha256:d66d8280c811184b0c32519ed4e948f507032b0a90fab8e2d72a3e4264cda308"},
+    {file = "lido_sdk-2.4.1-cp37-cp37m-macosx_10_14_x86_64.whl", hash = "sha256:3c81f8b5a3e865d5a24dbc8f0c8af013338d85af8ad02d43224f34d652b90cf1"},
+    {file = "lido_sdk-2.4.1-cp37-cp37m-win_amd64.whl", hash = "sha256:99198eab937b6cafad71167169112f231c16991fd7141cf9d6e05a3f84aeee2e"},
+    {file = "lido_sdk-2.4.1-cp38-cp38-macosx_10_14_x86_64.whl", hash = "sha256:7f30099c8dc7a978c99f83d364a444cba5d1f1dec9a62a290bac8e98300fa538"},
+    {file = "lido_sdk-2.4.1-cp38-cp38-win_amd64.whl", hash = "sha256:a04b411f766dece7df2b52b904d3ce53bc3588d78d446fae05bb8fc9e060ee50"},
+    {file = "lido_sdk-2.4.1-cp39-cp39-macosx_10_14_x86_64.whl", hash = "sha256:c3ee3a5b456d9cc832de6aa2db6fdb5b8fe094a45dfe42da02a9a1341134db7f"},
+    {file = "lido_sdk-2.4.1-cp39-cp39-win_amd64.whl", hash = "sha256:1cbee207392b43afebcc7531d65b267453e7ee9cfaac2e5c704ecc0fafea6233"},
 ]
 lru-dict = [
     {file = "lru-dict-1.1.7.tar.gz", hash = "sha256:45b81f67d75341d4433abade799a47e9c42a9e22a118531dcb5e549864032d7c"},
@@ -810,8 +810,8 @@ multiaddr = [
     {file = "multiaddr-0.0.9.tar.gz", hash = "sha256:30b2695189edc3d5b90f1c303abb8f02d963a3a4edf2e7178b975eb417ab0ecf"},
 ]
 multicall = [
-    {file = "multicall-0.1.2-py3-none-any.whl", hash = "sha256:1fef15f9a64ffe0edd57cda08c5fd6eb60109ebb62f9483d2f6582dd73427f3f"},
-    {file = "multicall-0.1.2.tar.gz", hash = "sha256:bdc7ff1b60b9b4d6c0312559d2f0396a92469f8cddf86531201e0f6fe79b8374"},
+    {file = "multicall-0.1.3-py3-none-any.whl", hash = "sha256:775702b52ac16939f8d9b29921957c98826e76ae6007f05095cca3fd1be82cde"},
+    {file = "multicall-0.1.3.tar.gz", hash = "sha256:94ee3d117667bb9bc5be53a1304e05216b78620128d1029621dcef7f91990f62"},
 ]
 multidict = [
     {file = "multidict-5.1.0-cp36-cp36m-macosx_10_14_x86_64.whl", hash = "sha256:b7993704f1a4b204e71debe6095150d43b2ee6150fa4f44d6d966ec356a8d61f"},

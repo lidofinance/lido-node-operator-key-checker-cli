@@ -16,7 +16,7 @@ lido-cli = 'lido_validate_keys:cli'
 
 [tool.poetry.dependencies]
 python = ">3.7.1,<4"
-lido-sdk = "2.2.1"
+lido-sdk = "2.4.1"
 click = "8.0.1"
 colorama = "0.4.4"
 
