@@ -7,6 +7,9 @@ import lido_sdk.config
 from web3 import Web3
 from lido_sdk import Lido
 
+import logging
+
+SDK_MODULE_NAME = "verified_keys_progress_logger"
 
 @click.group()
 @click.option(
@@ -145,6 +148,9 @@ def _load_base_data(lido, show_details=False):
 
 def _validate_keys(lido, keys=None):
     click.secho("Validating keys...", fg="green")
+    logging.basicConfig(level='WARNING', format='%(message)s')
+    logging.getLogger(SDK_MODULE_NAME).setLevel(level=logging.DEBUG)
+
     invalid_keys = lido.validate_keys(keys)
 
     if invalid_keys:
